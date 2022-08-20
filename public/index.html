@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <a href="/upload.html" style="background-color: pink;">업로드</a>
+
+  <div class="parent"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCjZX4Pyq8neb_P-h3M7QJl-niTkK6Vp-I",
+      authDomain: "coopon-66f7d.firebaseapp.com",
+      projectId: "coopon-66f7d",
+      storageBucket: "coopon-66f7d.appspot.com",
+      messagingSenderId: "325860852255",
+      appId: "1:325860852255:web:963bdf9365f721dfcfcb2a"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <script>
+    const parent = document.querySelector('.parent')
+    const db = firebase.firestore();
+    
+    db.collection('product').get().then((res) => {
+      res.forEach((doc) => {
+        const div = document.createElement('div');
+        console.log(doc.data().id);
+        div.classList.add = 'child';
+        div.innerHTML = `
+          <div>${doc.data().date}</div>
+          <div>${doc.data().exp_date}</div>
+          <img src="${doc.data().imgURL}" width='100%'/>
+          <button onclick="onDelete(event, ${doc.data().id})">삭제</button>
+          <hr>
+        `;
+        parent.appendChild(div);
+      })
+    })
+
+    const onDelete = (event, id) => {
+      const result = confirm('정말 삭제하시겠습니까?');
+      if (result){
+        db.collection('product').doc(id.toString()).delete().then(
+        ()=>{
+          alert('삭제되었습니다.');
+          window.location.reload();
+        }
+        ).catch(
+          (err)=>{console.log(err)}
+        )
+      } else {
+        console.log('취소');
+      }
+
+    }
+  </script>
+
+
+</body>
+
+</html>
