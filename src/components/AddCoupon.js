@@ -8,8 +8,6 @@ import { v4 } from "uuid";
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-const expDateFormat = "YYYY-MM-DD";
-
 const checkVal = (file) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
 
@@ -43,7 +41,7 @@ export default function AddCoupon() {
               const newCoupon = {
                 title: title,
                 currDate: moment().unix(),
-                expDate: expDate.format(expDateFormat),
+                expDate: expDate.unix(),
                 imgUrl: url,
               };
               CouponDataService.addCoupons(newCoupon)
