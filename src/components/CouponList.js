@@ -21,12 +21,16 @@ export default function CouponList() {
   }, []);
   return (
     <>
-      <div>
-        <div>{}</div>
-        <div>{}</div>
-        <div>{}</div>
-        <div>{}</div>
-      </div>
+      {coupons.map((doc, index) => {
+        return (
+          <div key={doc.id}>
+            <div>{doc.currDate}</div>
+            <div>{doc.title}</div>
+            <div>{doc.img}</div>
+            <div>{doc.expDate}</div>
+          </div>
+        );
+      })}
       {/* <div className="container">
         {card.map((e) => (
           <div className="card">{e}</div>

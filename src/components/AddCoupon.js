@@ -1,35 +1,69 @@
-import React, { useState } from "react";
-import { Button, DatePicker, Form, Input, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import React from "react";
+import { Button, DatePicker, Form, Input, message, Upload } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
 import CouponDataService from "../services/coupon.services";
+import { v4 } from "uuid";
+
+import { storage } from "../firebase-config";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const expDateFormat = "YYYY-MM-DD";
 
-export default function AddCoupon() {
-  //   const [title, setTitle] = useState("assad");
-  //   const [expDate, setExpDate] = useState("");
-  //   const [currDate, setCurrDate] = useState("");
-  //   const [imgUrl, setImgUrl] = useState("");
+const checkVal = (file) => {
+  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
 
+  if (!isJpgOrPng) {
+    message.error("JPG 또는 PNG 파일만 업로드 가능합니다.");
+  }
+
+  const isLt2M = file.size / 1024 / 1024 < 2;
+
+  if (!isLt2M) {
+    message.error("이미지 사이즈가 2MB를 초과할 수 없습니다.");
+  }
+
+  return isJpgOrPng && isLt2M;
+};
+
+export default function AddCoupon() {
   const onFinish = async (values) => {
     const { title, expDate, upload } = values;
-    // console.log("Success:", values);
+    const uuid = v4();
 
-    console.log(upload[0].name);
-    const newCoupon = {
-      title: title,
-      currDate: moment().unix(),
-      expDate: expDate.format(expDateFormat),
-      img: upload[0].name,
-    };
-    console.log(newCoupon);
-
-    try {
-      await CouponDataService.addCoupons(newCoupon);
-      console.log("성공하였습니다.");
-    } catch (error) {
-      console.log("에러 발생", error);
+    if (!checkVal(upload[0].originFileObj)) {
+      return false;
+    } else {
+      const imageRef = ref(storage, `images/${uuid}`);
+      uploadBytes(imageRef, upload[0].originFileObj)
+        .then(() => {
+          console.log(`이미지 업로드가 성공하였습니다.`);
+          getDownloadURL(imageRef)
+            .then((url) => {
+              const newCoupon = {
+                title: title,
+                currDate: moment().unix(),
+                expDate: expDate.format(expDateFormat),
+                imgUrl: url,
+              };
+              CouponDataService.addCoupons(newCoupon)
+                .then(() => {
+                  console.log("저장되었습니다.");
+                  alert("저장되었습니다.");
+                  console.log(newCoupon);
+                })
+                .catch((error) => {
+                  console.log("저장 오류 발생 : ", error);
+                  // 저장된 이미지 삭제하기
+                });
+            })
+            .catch((error) => {
+              console.log("이미지 URL 가져오는 도중 에러발생 :", error);
+            });
+        })
+        .catch((error) => {
+          console.log(`이미지 업로드중 에러 발생 : ${error}`);
+        });
     }
   };
 
@@ -52,6 +86,7 @@ export default function AddCoupon() {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
+      style={{ padding: 20 }}
     >
       <Form.Item
         label="제목"
@@ -91,13 +126,24 @@ export default function AddCoupon() {
           },
         ]}
       >
-        <Upload name="logo" action="/upload.do" listType="picture">
-          <Button icon={<UploadOutlined />}>쿠폰 사진 첨부</Button>
+        <Upload name="logo" listType="picture-card" maxCount={1}>
+          <div>
+            <PlusOutlined />
+            <div
+              style={{
+                marginTop: 8,
+              }}
+            >
+              Upload
+            </div>
+          </div>
         </Upload>
       </Form.Item>
 
       <Form.Item>
-        <Button htmlType="submit">저장하기</Button>
+        <Button type="primary" block htmlType="submit">
+          저장
+        </Button>
       </Form.Item>
     </Form>
   );
