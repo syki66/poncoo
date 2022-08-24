@@ -9,12 +9,14 @@ export default function CouponList() {
 
   const getCoupons = async () => {
     const data = await couponServices.getAllCoupons();
-    setCoupons(
-      data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }))
-    );
+    const parsedData = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+    const sortedParsedData = parsedData.sort(function (a, b) {
+      return b.currDate - a.currDate;
+    });
+    setCoupons(sortedParsedData);
   };
 
   const handleChange = (value) => {
@@ -57,6 +59,9 @@ export default function CouponList() {
           return (
             <Col key={doc.id} span={12} style={{ padding: "1em" }}>
               <Card
+                style={{
+                  border: "solid",
+                }}
                 cover={
                   <img
                     alt="coupon"
@@ -64,6 +69,7 @@ export default function CouponList() {
                       width: "100%",
                       aspectRatio: "1 / 1",
                       objectFit: "cover",
+                      borderBottom: "solid",
                     }}
                     src={doc.imgUrl}
                   />
