@@ -60,30 +60,40 @@ export default function CouponList() {
   }, []);
   return (
     <>
-      <Select defaultValue="curr_descending" onChange={handleChange}>
-        <Option value="curr_descending">최근 순</Option>
-        <Option value="curr_ascending">오래된 순</Option>
-        <Option value="exp_ascending">유효기간 만료 순</Option>
-        <Option value="exp_descending">유효기간 만료 역순</Option>
-      </Select>
-      <Link to="/upload/">
-        <Button type="primary">추가하기</Button>
-      </Link>
+      <Row style={{ padding: "0.5em" }}>
+        <Col span={12} style={{ padding: "0.5em" }}>
+          <Select
+            style={{
+              width: "100%",
+            }}
+            defaultValue="curr_descending"
+            onChange={handleChange}
+          >
+            <Option value="curr_descending">최근 순</Option>
+            <Option value="curr_ascending">오래된 순</Option>
+            <Option value="exp_ascending">유효기간 만료 순</Option>
+            <Option value="exp_descending">유효기간 만료 역순</Option>
+          </Select>
+        </Col>
+        <Col span={12} style={{ padding: "0.5em" }}>
+          <Link to="/upload/">
+            <Button block type="primary">
+              새 쿠폰 추가
+            </Button>
+          </Link>
+        </Col>
+      </Row>
       <Row>
         {coupons.map((doc) => {
           return (
-            <Col
-              key={doc.id}
-              span={12}
-              style={{ padding: "0.5em" }}
-              onClick={(event) => handleClick(doc.id)}
-            >
+            <Col key={doc.id} span={12} style={{ padding: "0.5em" }}>
               <div
                 style={{
                   border: "solid",
                 }}
               >
                 <Card
+                  onClick={(event) => handleClick(doc.id)}
                   cover={
                     <img
                       alt="coupon"

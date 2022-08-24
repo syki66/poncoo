@@ -1,13 +1,12 @@
 import { Button } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import couponServices from "../services/coupon.services";
 
 export default function ViewCoupon() {
   const [coupon, setCoupon] = useState({});
   const location = useLocation();
-  const navigate = useNavigate();
   const id = location.pathname.split("/").pop();
 
   const doComplete = async (used) => {
@@ -22,12 +21,12 @@ export default function ViewCoupon() {
         ...coupon,
         used: used,
       };
+      setCoupon(updatedCoupon);
       await couponServices.updateCoupon(id, updatedCoupon);
 
       used
         ? alert('"사용 완료" 처리되었습니다.')
         : alert('"사용 복구" 처리 되었습니다.');
-      navigate("/");
     } catch (error) {
       console.log("사용 완료(복구) 처리중 에러 : ", error);
     }
@@ -40,12 +39,12 @@ export default function ViewCoupon() {
         ...json.data(),
       });
     } catch (error) {
-      console.log(error);
+      console.log("view get에서 에러발생: ", error);
     }
   };
   useEffect(() => {
     init(id);
-  });
+  }, []);
   return (
     <>
       <div
@@ -75,10 +74,10 @@ export default function ViewCoupon() {
             type="ghost"
             block
           >
-            취소
+            이전
           </Button>
         </Link>
-        <Link to={`/edit/${coupon.id}`}>
+        <Link to={`/edit/${id}`}>
           <Button
             style={{
               marginTop: "0.5em",
@@ -95,13 +94,13 @@ export default function ViewCoupon() {
             block
             onClick={(e) => doComplete(false)}
             style={{
-              backgroundColor: "#ff4081",
+              backgroundColor: "#55ab55",
               color: "white",
               padding: "0.5em",
               marginTop: "0.5em",
             }}
           >
-            사용 복구
+            복구
           </Button>
         ) : (
           <Button

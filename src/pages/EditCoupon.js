@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, DatePicker, Form, Input, message, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
@@ -7,7 +7,8 @@ import { v4 } from "uuid";
 
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import couponServices from "../services/coupon.services";
 
 const checkVal = (file) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -26,6 +27,25 @@ const checkVal = (file) => {
 };
 
 export default function AddCoupon() {
+  const [form] = Form.useForm();
+  const location = useLocation();
+  const id = location.pathname.split("/").pop();
+
+  const getCoupon = async (id) => {
+    try {
+      const json = await couponServices.getCoupon(id);
+      form.setFieldsValue({
+        title: json.data().title,
+        expDate: moment(
+          moment.unix(json.data().expDate).format("YYYY-MM-DD"),
+          "YYYY-MM-DD"
+        ),
+      });
+    } catch (error) {
+      console.log("edit에서 get할때 에러 발생: ", error);
+    }
+  };
+
   const onFinish = async (values) => {
     const { title, expDate, upload } = values;
     const uuid = v4();
@@ -81,8 +101,13 @@ export default function AddCoupon() {
     return e?.fileList;
   };
 
+  useEffect(() => {
+    getCoupon(id);
+  }, []);
+
   return (
     <Form
+      form={form}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
@@ -126,7 +151,21 @@ export default function AddCoupon() {
           },
         ]}
       >
-        <Upload name="logo" listType="picture-card" maxCount={1}>
+        <Upload
+          defaultFileList={[
+            {
+              uid: "1",
+              name: "xxx.png",
+              status: "done",
+              response: "Server Error 500",
+              // custom error message to show
+              url: "https://firebasestorage.googleapis.com/v0/b/coopon-66f7d.appspot.com/o/images%2Fe345515d-3dcf-4103-a48e-bb122ed7faca?alt=media&token=c053cd83-1449-481b-9c20-d04cd18b0439",
+            },
+          ]}
+          name="logo"
+          listType="picture-card"
+          maxCount={1}
+        >
           <div>
             <PlusOutlined />
             <div
@@ -141,7 +180,7 @@ export default function AddCoupon() {
       </Form.Item>
 
       <Form.Item>
-        <Link to="/">
+        <Link to={`/view/${id} `}>
           <Button
             style={{
               backgroundColor: "#a0a0a0",
@@ -160,7 +199,7 @@ export default function AddCoupon() {
           block
           htmlType="submit"
         >
-          저장
+          수정
         </Button>
       </Form.Item>
     </Form>

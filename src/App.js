@@ -6,6 +6,7 @@ import CouponList from "./pages/CouponList";
 import AddCoupon from "./pages/AddCoupon";
 import NotFound from "./pages/NotFound";
 import ViewCoupon from "./pages/ViewCoupon";
+import EditCoupon from "./pages/EditCoupon";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         {/* <Route path="/used" element={<CouponList />}></Route> */}
         <Route path="/upload" element={<AddCoupon />}></Route>
         <Route path="/view/:id" element={<ViewCoupon />}></Route>
-        {/* <Route path="/edit/:id" element={<EditCoupon />}></Route> */}
+        <Route path="/edit/:id" element={<EditCoupon />}></Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
