@@ -7,6 +7,7 @@ import { v4 } from "uuid";
 
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { Link } from "react-router-dom";
 
 const checkVal = (file) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -43,6 +44,7 @@ export default function AddCoupon() {
                 currDate: moment().unix(),
                 expDate: expDate.unix(),
                 imgUrl: url,
+                used: false,
               };
               CouponDataService.addCoupons(newCoupon)
                 .then(() => {
@@ -84,7 +86,7 @@ export default function AddCoupon() {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      style={{ padding: 20 }}
+      style={{ padding: "1em" }}
     >
       <Form.Item
         label="제목"
@@ -139,7 +141,25 @@ export default function AddCoupon() {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" block htmlType="submit">
+        <Link to="/">
+          <Button
+            style={{
+              backgroundColor: "#a0a0a0",
+              color: "white",
+              borderColor: "gray",
+            }}
+            type="ghost"
+            block
+          >
+            취소
+          </Button>
+        </Link>
+        <Button
+          style={{ marginTop: "0.5em" }}
+          type="primary"
+          block
+          htmlType="submit"
+        >
           저장
         </Button>
       </Form.Item>
