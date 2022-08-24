@@ -7,7 +7,7 @@ import { v4 } from "uuid";
 
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const checkVal = (file) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -26,6 +26,7 @@ const checkVal = (file) => {
 };
 
 export default function AddCoupon() {
+  const navigate = useNavigate();
   const onFinish = async (values) => {
     const { title, expDate, upload } = values;
     const uuid = v4();
@@ -50,7 +51,7 @@ export default function AddCoupon() {
                 .then(() => {
                   console.log("저장되었습니다.");
                   alert("저장되었습니다.");
-                  console.log(newCoupon);
+                  navigate("/");
                 })
                 .catch((error) => {
                   console.log("저장 오류 발생 : ", error);
