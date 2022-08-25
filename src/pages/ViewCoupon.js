@@ -3,6 +3,9 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import CouponDataService from "../services/coupon.services";
+import { Typography } from "antd";
+
+const { Title } = Typography;
 
 export default function ViewCoupon() {
   const [coupon, setCoupon] = useState({});
@@ -52,9 +55,26 @@ export default function ViewCoupon() {
           padding: "0.5em",
         }}
       >
-        <div>{coupon.title}</div>
-        <div>{moment.unix(coupon.expDate).format("YYYY년 MM월 DD일")}</div>
-        <div>{moment.unix(coupon.currDate).format("YYYY-MM-DD")}</div>
+        <Title level={1}>{coupon.title}</Title>
+        <Title
+          level={5}
+          align="right"
+          style={{
+            color: "lightGray",
+          }}
+        >
+          생성일 : {moment.unix(coupon.currDate).format("YYYY-MM-DD")}
+        </Title>
+        <Title
+          align="center"
+          level={3}
+          style={{
+            color: "#ff6961",
+          }}
+        >
+          {moment.unix(coupon.expDate).format("YYYY년 MM월 DD일")} 까지
+        </Title>
+
         <img
           style={{
             width: "100%",
@@ -88,35 +108,37 @@ export default function ViewCoupon() {
             편집
           </Button>
         </Link>
-        {coupon.used ? (
-          <Button
-            type="ghost"
-            block
-            onClick={(e) => doComplete(false)}
-            style={{
-              backgroundColor: "#55ab55",
-              color: "white",
-              padding: "0.5em",
-              marginTop: "0.5em",
-            }}
-          >
-            복구
-          </Button>
-        ) : (
-          <Button
-            type="ghost"
-            block
-            onClick={(e) => doComplete(true)}
-            style={{
-              backgroundColor: "#ff4081",
-              color: "white",
-              padding: "0.5em",
-              marginTop: "0.5em",
-            }}
-          >
-            사용 완료
-          </Button>
-        )}
+        {coupon.used
+          ? coupon.used !== undefined && (
+              <Button
+                type="ghost"
+                block
+                onClick={(e) => doComplete(false)}
+                style={{
+                  backgroundColor: "#55ab55",
+                  color: "white",
+                  padding: "0.5em",
+                  marginTop: "0.5em",
+                }}
+              >
+                복구
+              </Button>
+            )
+          : coupon.used !== undefined && (
+              <Button
+                type="ghost"
+                block
+                onClick={(e) => doComplete(true)}
+                style={{
+                  backgroundColor: "#ff4081",
+                  color: "white",
+                  padding: "0.5em",
+                  marginTop: "0.5em",
+                }}
+              >
+                사용 완료
+              </Button>
+            )}
       </div>
     </>
   );
