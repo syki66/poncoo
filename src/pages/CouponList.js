@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import CouponDataService from "../services/coupon.services";
-import { Button, Card, Col, Row, Select, Pagination } from "antd";
+import { Button, Card, Col, Row, Select, Pagination, Typography } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 
+const { Title } = Typography;
 const { Meta } = Card;
 const { Option } = Select;
 
-const postPerPage = 2;
+const postPerPage = 1;
 
 export default function CouponList() {
   const [coupons, setCoupons] = useState([]);
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const pageIndex = Number(location.pathname.split("/").pop());
-  console.log(pageIndex);
+  const [pageIndex, setPageIndex] = useState(Number(location.pathname.split("/").pop()));
   const getCoupons = async () => {
     try {
       const data = await CouponDataService.getAllCoupons();
@@ -69,10 +69,11 @@ export default function CouponList() {
   };
 
   const onPagiChange = (page) => {
+    setPageIndex(page);
     setPosts(
       coupons.slice(
-        (pageIndex - 1) * postPerPage,
-        (pageIndex - 1) * postPerPage + postPerPage
+        (page - 1) * postPerPage,
+        (page - 1) * postPerPage + postPerPage
       )
     );
     navigate(`/${page}`);
@@ -107,12 +108,6 @@ export default function CouponList() {
         </Col>
       </Row>
       <Row>
-        {/* {coupons.map((e) => {
-          console.log("coup", e.id);
-        })}
-        {posts.map((e) => {
-          console.log("\nposts", e.id);
-        })} */}
         {posts.map((doc) => {
           return (
             <Col key={doc.id} span={12} style={{ padding: "0.5em" }}>
@@ -148,14 +143,25 @@ export default function CouponList() {
           );
         })}
       </Row>
-      <Pagination
-        defaultCurrent={1}
-        current={pageIndex}
-        total={coupons.length}
-        pageSize={postPerPage}
-        showSizeChanger={false}
-        onChange={onPagiChange}
-      />
+      <Row style={{
+        paddingTop:'1em'
+      }} justify="center">
+        <Col>
+          <Pagination
+            defaultCurrent={1}
+            current={pageIndex}
+            total={coupons.length}
+            pageSize={postPerPage}
+            showQuickJumper={{ goButton: <button>go</button> }}
+            onChange={onPagiChange}
+            size="large"
+          />
+        </Col>
+      </Row>
+
+      <Title style={{
+        padding: '1em',
+      }} level={5} align="center">총 쿠폰 개수: {coupons.length} 장</Title>
     </>
   );
 }

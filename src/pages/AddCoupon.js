@@ -51,7 +51,7 @@ export default function AddCoupon() {
                 .then(() => {
                   console.log("저장되었습니다.");
                   alert("저장되었습니다.");
-                  navigate("/");
+                  navigate("/1");
                 })
                 .catch((error) => {
                   console.log("저장 오류 발생 : ", error);
@@ -142,7 +142,7 @@ export default function AddCoupon() {
       </Form.Item>
 
       <Form.Item>
-        <Link to="/">
+        <Link to="/1">
           <Button
             style={{
               backgroundColor: "#a0a0a0",

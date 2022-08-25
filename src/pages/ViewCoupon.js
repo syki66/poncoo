@@ -83,7 +83,7 @@ export default function ViewCoupon() {
           alt="gifticon"
           src={coupon.imgUrl}
         />
-        <Link to="/">
+        <Link to="/1">
           <Button
             style={{
               backgroundColor: "#a0a0a0",
