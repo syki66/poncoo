@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import CouponDataService from "../services/coupon.services";
-import { Button, Card, Col, Row, Select } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Button, Card, Col, Row, Select, Pagination } from "antd";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 
 const { Meta } = Card;
 const { Option } = Select;
 
+const postPerPage = 2;
+
 export default function CouponList() {
   const [coupons, setCoupons] = useState([]);
+  const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const pageIndex = Number(location.pathname.split("/").pop());
+  console.log(pageIndex);
   const getCoupons = async () => {
     try {
       const data = await CouponDataService.getAllCoupons();
@@ -22,12 +27,18 @@ export default function CouponList() {
         return b.currDate - a.currDate;
       });
       setCoupons(sortedParsedData);
+      setPosts(
+        sortedParsedData.slice(
+          (pageIndex - 1) * postPerPage,
+          (pageIndex - 1) * postPerPage + postPerPage
+        )
+      );
     } catch (error) {
       console.log("쿠폰 리스트 불러오는 도중 에러 : ", error);
     }
   };
 
-  const handleChange = (value) => {
+  const handleSelectChange = (value) => {
     const sorted = [...coupons].sort();
     if (value === "curr_descending") {
       sorted.sort(function (a, b) {
@@ -49,10 +60,22 @@ export default function CouponList() {
       console.log("정렬과정 중 에러 발생");
     }
     setCoupons(sorted);
+    setPosts(
+      sorted.slice(
+        (pageIndex - 1) * postPerPage,
+        (pageIndex - 1) * postPerPage + postPerPage
+      )
+    );
   };
 
-  const handleClick = async (id) => {
-    navigate(`/view/${id}`);
+  const onPagiChange = (page) => {
+    setPosts(
+      coupons.slice(
+        (pageIndex - 1) * postPerPage,
+        (pageIndex - 1) * postPerPage + postPerPage
+      )
+    );
+    navigate(`/${page}`);
   };
 
   useEffect(() => {
@@ -67,7 +90,7 @@ export default function CouponList() {
               width: "100%",
             }}
             defaultValue="curr_descending"
-            onChange={handleChange}
+            onChange={handleSelectChange}
           >
             <Option value="curr_descending">최근 순</Option>
             <Option value="curr_ascending">오래된 순</Option>
@@ -84,7 +107,13 @@ export default function CouponList() {
         </Col>
       </Row>
       <Row>
-        {coupons.map((doc) => {
+        {/* {coupons.map((e) => {
+          console.log("coup", e.id);
+        })}
+        {posts.map((e) => {
+          console.log("\nposts", e.id);
+        })} */}
+        {posts.map((doc) => {
           return (
             <Col key={doc.id} span={12} style={{ padding: "0.5em" }}>
               <div
@@ -93,7 +122,7 @@ export default function CouponList() {
                 }}
               >
                 <Card
-                  onClick={(event) => handleClick(doc.id)}
+                  onClick={(event) => navigate(`/view/${doc.id}`)}
                   cover={
                     <img
                       alt="coupon"
@@ -119,6 +148,14 @@ export default function CouponList() {
           );
         })}
       </Row>
+      <Pagination
+        defaultCurrent={1}
+        current={pageIndex}
+        total={coupons.length}
+        pageSize={postPerPage}
+        showSizeChanger={false}
+        onChange={onPagiChange}
+      />
     </>
   );
 }
