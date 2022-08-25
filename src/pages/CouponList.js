@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CouponDataService from "../services/coupon.services";
 import { Button, Card, Col, Row, Select, Pagination, Typography } from "antd";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 
 const { Title } = Typography;
@@ -100,11 +100,13 @@ export default function CouponList() {
           </Select>
         </Col>
         <Col span={12} style={{ padding: "0.5em" }}>
-          <Link to="/upload/">
-            <Button block type="primary">
-              새 쿠폰 추가
-            </Button>
-          </Link>
+          <Button
+            onClick={() => navigate("/upload")}
+            block
+            type="primary"
+          >
+            새 쿠폰 추가
+          </Button>
         </Col>
       </Row>
       <Row>

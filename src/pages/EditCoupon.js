@@ -6,7 +6,7 @@ import CouponDataService from "../services/coupon.services";
 import { v4 } from "uuid";
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const checkVal = (file) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -201,19 +201,18 @@ export default function AddCoupon() {
       </Form.Item>
 
       <Form.Item>
-        <Link to={`/view/${id}`}>
-          <Button
-            style={{
-              backgroundColor: "#a0a0a0",
-              color: "white",
-              borderColor: "gray",
-            }}
-            type="ghost"
-            block
-          >
-            이전
-          </Button>
-        </Link>
+        <Button
+          style={{
+            backgroundColor: "#a0a0a0",
+            color: "white",
+            borderColor: "gray",
+          }}
+          onClick={() => {navigate(`/view/${id}`)}}
+          type="ghost"
+          block
+        >
+          이전
+        </Button>
         <Button
           style={{ marginTop: "0.5em" }}
           type="primary"

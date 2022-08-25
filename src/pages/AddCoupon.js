@@ -7,7 +7,7 @@ import { v4 } from "uuid";
 
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const checkVal = (file) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -51,7 +51,7 @@ export default function AddCoupon() {
                 .then(() => {
                   console.log("저장되었습니다.");
                   alert("저장되었습니다.");
-                  navigate("/1");
+                  navigate(-1);
                 })
                 .catch((error) => {
                   console.log("저장 오류 발생 : ", error);
@@ -142,19 +142,18 @@ export default function AddCoupon() {
       </Form.Item>
 
       <Form.Item>
-        <Link to="/1">
-          <Button
-            style={{
-              backgroundColor: "#a0a0a0",
-              color: "white",
-              borderColor: "gray",
-            }}
-            type="ghost"
-            block
-          >
-            이전
-          </Button>
-        </Link>
+        <Button
+          style={{
+            backgroundColor: "#a0a0a0",
+            color: "white",
+            borderColor: "gray",
+          }}
+          onClick={() => navigate(-1)}
+          type="ghost"
+          block
+        >
+          이전
+        </Button>
         <Button
           style={{ marginTop: "0.5em" }}
           type="primary"

@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import CouponDataService from "../services/coupon.services";
 import { Typography } from "antd";
 
@@ -10,6 +10,7 @@ const { Title } = Typography;
 export default function ViewCoupon() {
   const [coupon, setCoupon] = useState({});
   const location = useLocation();
+  const navigate = useNavigate();
   const id = location.pathname.split("/").pop();
 
   const doComplete = async (used) => {
@@ -83,31 +84,29 @@ export default function ViewCoupon() {
           alt="gifticon"
           src={coupon.imgUrl}
         />
-        <Link to="/1">
-          <Button
-            style={{
-              backgroundColor: "#a0a0a0",
-              color: "white",
-              borderColor: "gray",
-              marginTop: "1em",
-            }}
-            type="ghost"
-            block
-          >
-            이전
-          </Button>
-        </Link>
-        <Link to={`/edit/${id}`}>
-          <Button
-            style={{
-              marginTop: "0.5em",
-            }}
-            type="primary"
-            block
-          >
-            편집
-          </Button>
-        </Link>
+        <Button
+          style={{
+            backgroundColor: "#a0a0a0",
+            color: "white",
+            borderColor: "gray",
+            marginTop: "1em",
+          }}
+          onClick={() => {navigate(-1)}}
+          type="ghost"
+          block
+        >
+          이전
+        </Button>
+        <Button
+          style={{
+            marginTop: "0.5em",
+          }}
+          onClick={() => {navigate(`/edit/${id}`)}}
+          type="primary"
+          block
+        >
+          편집
+        </Button>
         {coupon.used
           ? coupon.used !== undefined && (
               <Button
