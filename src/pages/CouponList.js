@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import couponServices from "../services/coupon.services";
+import CouponDataService from "../services/coupon.services";
 import { Button, Card, Col, Row, Select } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
@@ -13,7 +13,7 @@ export default function CouponList() {
 
   const getCoupons = async () => {
     try {
-      const data = await couponServices.getAllCoupons();
+      const data = await CouponDataService.getAllCoupons();
       const parsedData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,

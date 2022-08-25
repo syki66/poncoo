@@ -2,7 +2,7 @@ import { Button } from "antd";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import couponServices from "../services/coupon.services";
+import CouponDataService from "../services/coupon.services";
 
 export default function ViewCoupon() {
   const [coupon, setCoupon] = useState({});
@@ -22,7 +22,7 @@ export default function ViewCoupon() {
         used: used,
       };
       setCoupon(updatedCoupon);
-      await couponServices.updateCoupon(id, updatedCoupon);
+      await CouponDataService.updateCoupon(id, updatedCoupon);
 
       used
         ? alert('"사용 완료" 처리되었습니다.')
@@ -34,7 +34,7 @@ export default function ViewCoupon() {
 
   const init = async (id) => {
     try {
-      const json = await couponServices.getCoupon(id);
+      const json = await CouponDataService.getCoupon(id);
       setCoupon({
         ...json.data(),
       });
