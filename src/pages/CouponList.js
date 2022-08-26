@@ -8,14 +8,16 @@ const { Title } = Typography;
 const { Meta } = Card;
 const { Option } = Select;
 
-const postPerPage = 1;
+const postPerPage = 4;
 
 export default function CouponList() {
   const [coupons, setCoupons] = useState([]);
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const [pageIndex, setPageIndex] = useState(Number(location.pathname.split("/").pop()));
+  const [pageIndex, setPageIndex] = useState(
+    Number(location.pathname.split("/").pop())
+  );
   const getCoupons = async () => {
     try {
       const data = await CouponDataService.getAllCoupons();
@@ -69,6 +71,7 @@ export default function CouponList() {
   };
 
   const onPagiChange = (page) => {
+    localStorage.setItem("lastPageNum", page);
     setPageIndex(page);
     setPosts(
       coupons.slice(
@@ -100,11 +103,7 @@ export default function CouponList() {
           </Select>
         </Col>
         <Col span={12} style={{ padding: "0.5em" }}>
-          <Button
-            onClick={() => navigate("/upload")}
-            block
-            type="primary"
-          >
+          <Button onClick={() => navigate("/upload")} block type="primary">
             새 쿠폰 추가
           </Button>
         </Col>
@@ -145,9 +144,12 @@ export default function CouponList() {
           );
         })}
       </Row>
-      <Row style={{
-        paddingTop:'1em'
-      }} justify="center">
+      <Row
+        style={{
+          paddingTop: "1em",
+        }}
+        justify="center"
+      >
         <Col>
           <Pagination
             defaultCurrent={1}
@@ -161,9 +163,15 @@ export default function CouponList() {
         </Col>
       </Row>
 
-      <Title style={{
-        padding: '1em',
-      }} level={5} align="center">총 쿠폰 개수: {coupons.length} 장</Title>
+      <Title
+        style={{
+          padding: "1em",
+        }}
+        level={5}
+        align="center"
+      >
+        총 쿠폰 개수: {coupons.length} 장
+      </Title>
     </>
   );
 }

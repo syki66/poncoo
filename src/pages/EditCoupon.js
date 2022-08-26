@@ -207,7 +207,9 @@ export default function AddCoupon() {
             color: "white",
             borderColor: "gray",
           }}
-          onClick={() => {navigate(`/view/${id}`)}}
+          onClick={() => {
+            navigate(`/view/${id}`);
+          }}
           type="ghost"
           block
         >

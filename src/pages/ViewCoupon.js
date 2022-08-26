@@ -91,7 +91,14 @@ export default function ViewCoupon() {
             borderColor: "gray",
             marginTop: "1em",
           }}
-          onClick={() => {navigate(-1)}}
+          onClick={() => {
+            const lastPageNum = localStorage.getItem("lastPageNum");
+            if (!lastPageNum) {
+              navigate("/1");
+            } else {
+              navigate(`/${lastPageNum}`);
+            }
+          }}
           type="ghost"
           block
         >
@@ -101,7 +108,9 @@ export default function ViewCoupon() {
           style={{
             marginTop: "0.5em",
           }}
-          onClick={() => {navigate(`/edit/${id}`)}}
+          onClick={() => {
+            navigate(`/edit/${id}`);
+          }}
           type="primary"
           block
         >
