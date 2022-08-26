@@ -10,6 +10,10 @@ const { Option } = Select;
 
 const postPerPage = 4;
 
+// sortedParsedData = sortedParsedData.filter(
+//   (cp) => cp.used === usedCoupon
+// );
+
 export default function CouponList() {
   const [coupons, setCoupons] = useState([]);
   const [posts, setPosts] = useState([]);
