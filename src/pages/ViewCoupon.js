@@ -23,6 +23,7 @@ export default function ViewCoupon() {
     try {
       const updatedCoupon = {
         ...coupon,
+        currDate: moment().unix(),
         used: used,
       };
       setCoupon(updatedCoupon);
