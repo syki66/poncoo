@@ -126,6 +126,7 @@ export default function CouponList() {
                         width: "100%",
                         aspectRatio: "1 / 1",
                         objectFit: "cover",
+                        objectPosition: "50% 10%",
                         borderBottom: "solid",
                       }}
                       src={doc.imgUrl}

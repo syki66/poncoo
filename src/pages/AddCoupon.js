@@ -16,13 +16,13 @@ const checkVal = (file) => {
     message.error("JPG 또는 PNG 파일만 업로드 가능합니다.");
   }
 
-  const isLt2M = file.size / 1024 / 1024 < 2;
+  const isLt1M = file.size / 1024 / 1024 < 1;
 
-  if (!isLt2M) {
-    message.error("이미지 사이즈가 2MB를 초과할 수 없습니다.");
+  if (!isLt1M) {
+    message.error("이미지 사이즈가 1MB를 초과할 수 없습니다.");
   }
 
-  return isJpgOrPng && isLt2M;
+  return isJpgOrPng && isLt1M;
 };
 
 export default function AddCoupon() {
