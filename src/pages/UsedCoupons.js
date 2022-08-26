@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CouponList from "./CouponList";
 import CouponDataService from "../services/coupon.services";
 import { useLocation } from "react-router-dom";
@@ -12,6 +12,7 @@ export default function UsedCoupons() {
   const [pageIndex, setPageIndex] = useState(
     Number(location.pathname.split("/").pop())
   );
+  const [couponsLen, setCouponsLen] = useState({});
 
   const getCoupons = async () => {
     try {
@@ -31,6 +32,11 @@ export default function UsedCoupons() {
           (pageIndex - 1) * postPerPage + postPerPage
         )
       );
+      setCouponsLen({
+        totalLen: parsedData.length,
+        unusedLen: parsedData.length - filteredData.length,
+        usedLen: filteredData.length,
+      });
     } catch (error) {
       console.log("쿠폰 리스트 불러오는 도중 에러 : ", error);
     }
@@ -46,6 +52,7 @@ export default function UsedCoupons() {
       getCoupons={getCoupons}
       postPerPage={postPerPage}
       tabID={"used"}
+      couponsLen={couponsLen}
     />
   );
 }

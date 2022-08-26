@@ -27,6 +27,7 @@ export default function CouponList({
   getCoupons,
   postPerPage,
   tabID,
+  couponsLen,
 }) {
   const navigate = useNavigate();
 
@@ -176,7 +177,9 @@ export default function CouponList({
         level={5}
         align="center"
       >
-        총 쿠폰 개수: {coupons.length} 장
+        전체 쿠폰 : {couponsLen.totalLen} 장<br />
+        사용 가능 : {couponsLen.unusedLen} 장<br />
+        사용 완료 : {couponsLen.usedLen} 장
       </Title>
     </>
   );

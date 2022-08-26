@@ -96,7 +96,7 @@ export default function ViewCoupon() {
             const lastPageNum = localStorage.getItem("lastPageNum");
 
             if (!lastPageNum || !lastPageType) {
-              navigate("/1");
+              navigate("/unused/1");
             } else {
               navigate(`/${lastPageType}/${lastPageNum}`);
             }
