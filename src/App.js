@@ -10,6 +10,8 @@ import EditCoupon from "./pages/EditCoupon";
 import Login from "./pages/Login";
 // import BottomNav from "./components/BottomNav";
 import Notification from "./pages/Notification";
+import UsedCoupons from "./pages/UsedCoupons";
+import UnusedCoupons from "./pages/UnusedCoupons";
 
 function App() {
   return (
@@ -17,7 +19,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />}></Route>
-          <Route path="/:id" element={<CouponList />}></Route>
+          <Route path="/unused/:id" element={<UnusedCoupons />}></Route>
+          <Route path="/used/:id" element={<UsedCoupons />}></Route>
           <Route path="/upload" element={<AddCoupon />}></Route>
           <Route path="/view/:id" element={<ViewCoupon />}></Route>
           <Route path="/edit/:id" element={<EditCoupon />}></Route>

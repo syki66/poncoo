@@ -5,7 +5,7 @@ export default function Login() {
   return (
     <>
       <div>Login</div>
-      <Link to='/1'>go Coupon</Link>
+      <Link to="/unused/1">go Coupon</Link>
     </>
   );
 }

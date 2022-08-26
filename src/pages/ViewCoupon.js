@@ -92,11 +92,13 @@ export default function ViewCoupon() {
             marginTop: "1em",
           }}
           onClick={() => {
+            const lastPageType = localStorage.getItem("lastPageType");
             const lastPageNum = localStorage.getItem("lastPageNum");
-            if (!lastPageNum) {
+
+            if (!lastPageNum || !lastPageType) {
               navigate("/1");
             } else {
-              navigate(`/${lastPageNum}`);
+              navigate(`/${lastPageType}/${lastPageNum}`);
             }
           }}
           type="ghost"

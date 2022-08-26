@@ -1,48 +1,34 @@
-import React, { useEffect, useState } from "react";
-import CouponDataService from "../services/coupon.services";
-import { Button, Card, Col, Row, Select, Pagination, Typography } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  Button,
+  Card,
+  Col,
+  Row,
+  Select,
+  Pagination,
+  Typography,
+  Tabs,
+} from "antd";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
 const { Title } = Typography;
 const { Meta } = Card;
 const { Option } = Select;
+const { TabPane } = Tabs;
 
-const postPerPage = 4;
-
-// sortedParsedData = sortedParsedData.filter(
-//   (cp) => cp.used === usedCoupon
-// );
-
-export default function CouponList() {
-  const [coupons, setCoupons] = useState([]);
-  const [posts, setPosts] = useState([]);
+export default function CouponList({
+  coupons,
+  setCoupons,
+  posts,
+  setPosts,
+  pageIndex,
+  setPageIndex,
+  getCoupons,
+  postPerPage,
+  tabID,
+}) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [pageIndex, setPageIndex] = useState(
-    Number(location.pathname.split("/").pop())
-  );
-  const getCoupons = async () => {
-    try {
-      const data = await CouponDataService.getAllCoupons();
-      const parsedData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      const sortedParsedData = parsedData.sort(function (a, b) {
-        return b.currDate - a.currDate;
-      });
-      setCoupons(sortedParsedData);
-      setPosts(
-        sortedParsedData.slice(
-          (pageIndex - 1) * postPerPage,
-          (pageIndex - 1) * postPerPage + postPerPage
-        )
-      );
-    } catch (error) {
-      console.log("쿠폰 리스트 불러오는 도중 에러 : ", error);
-    }
-  };
 
   const handleSelectChange = (value) => {
     const sorted = [...coupons].sort();
@@ -75,6 +61,7 @@ export default function CouponList() {
   };
 
   const onPagiChange = (page) => {
+    localStorage.setItem("lastPageType", tabID);
     localStorage.setItem("lastPageNum", page);
     setPageIndex(page);
     setPosts(
@@ -83,7 +70,15 @@ export default function CouponList() {
         (page - 1) * postPerPage + postPerPage
       )
     );
-    navigate(`/${page}`);
+    navigate(`/${tabID}/${page}`);
+  };
+
+  const onTabChange = (key) => {
+    if (key === "unused") {
+      navigate("/unused/1");
+    } else if (key === "used") {
+      navigate("/used/1");
+    }
   };
 
   useEffect(() => {
@@ -111,6 +106,12 @@ export default function CouponList() {
             새 쿠폰 추가
           </Button>
         </Col>
+      </Row>
+      <Row style={{ padding: "0.5em" }}>
+        <Tabs defaultActiveKey={tabID} onChange={onTabChange}>
+          <TabPane tab="사용가능" key="unused"></TabPane>
+          <TabPane tab="사용완료" key="used"></TabPane>
+        </Tabs>
       </Row>
       <Row>
         {posts.map((doc) => {
