@@ -140,6 +140,7 @@ export default function ViewCoupon() {
             color: "white",
             borderColor: "gray",
             marginTop: "1em",
+            zIndex: "1000",
           }}
           onClick={() => {
             const lastPath = localStorage.getItem("lastPath");
@@ -158,6 +159,7 @@ export default function ViewCoupon() {
         <Button
           style={{
             marginTop: "0.5em",
+            zIndex: "1000",
           }}
           onClick={() => {
             navigate(`/edit/${id}`);
@@ -178,6 +180,7 @@ export default function ViewCoupon() {
                   color: "white",
                   padding: "0.5em",
                   marginTop: "0.5em",
+                  zIndex: "1000",
                 }}
               >
                 복구
@@ -193,6 +196,7 @@ export default function ViewCoupon() {
                   color: "white",
                   padding: "0.5em",
                   marginTop: "0.5em",
+                  zIndex: "1000",
                 }}
               >
                 사용 완료
