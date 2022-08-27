@@ -92,24 +92,25 @@ export default function ViewCoupon() {
                 style={{
                   position: "absolute",
                   width: "100%",
-                  aspectRatio: "1 / 1",
+                  height: "100%",
                   zIndex: "100",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <div
                   style={{
-                    height: "50%",
-                    width: "50%",
-                    marginLeft: "5%",
-                    marginTop: "5%",
-                    border: "3vw solid red",
+                    width: "90%",
+                    aspectRatio: "1 / 1",
+                    border: "4vw solid red",
                     borderRadius: "100%",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     color: "red",
                     fontWeight: "1000",
-                    fontSize: "12vw",
+                    fontSize: "20vw",
                     transform: "rotate(-22.5deg)",
                   }}
                 >
