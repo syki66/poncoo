@@ -155,48 +155,50 @@ export default function CouponList({
                     onClick={(event) => navigate(`/view/${doc.id}`)}
                     cover={
                       <>
-                        <div
-                          style={{
-                            position: "absolute",
-                            width: "100%",
-                            aspectRatio: "1 / 1",
-                            zIndex: "100",
-                          }}
-                        >
+                        <div style={{ position: "relative" }}>
                           <div
                             style={{
-                              height: "90%",
-                              width: "90%",
-                              marginLeft: "5%",
-                              marginTop: "5%",
-                              border: "2vw solid red",
-                              borderRadius: "100%",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              color: "red",
-                              fontWeight: "1000",
-                              fontSize: "10vw",
-                              transform: "rotate(-22.5deg)",
+                              position: "absolute",
+                              width: "100%",
+                              aspectRatio: "1 / 1",
+                              zIndex: "100",
                             }}
                           >
-                            사용
-                            <br />
-                            완료
+                            <div
+                              style={{
+                                height: "90%",
+                                width: "90%",
+                                marginLeft: "5%",
+                                marginTop: "5%",
+                                border: "2vw solid red",
+                                borderRadius: "100%",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                color: "red",
+                                fontWeight: "1000",
+                                fontSize: "10vw",
+                                transform: "rotate(-22.5deg)",
+                              }}
+                            >
+                              사용
+                              <br />
+                              완료
+                            </div>
                           </div>
+                          <img
+                            alt="coupon"
+                            style={{
+                              width: "100%",
+                              aspectRatio: "1 / 1",
+                              objectFit: "cover",
+                              objectPosition: "50% 10%",
+                              borderBottom: "solid",
+                              opacity: "0.5",
+                            }}
+                            src={doc.imgUrl}
+                          />
                         </div>
-                        <img
-                          alt="coupon"
-                          style={{
-                            width: "100%",
-                            aspectRatio: "1 / 1",
-                            objectFit: "cover",
-                            objectPosition: "50% 10%",
-                            borderBottom: "solid",
-                            opacity: "0.5",
-                          }}
-                          src={doc.imgUrl}
-                        />
                       </>
                     }
                   >

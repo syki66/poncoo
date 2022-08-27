@@ -85,44 +85,50 @@ export default function ViewCoupon() {
           <>
             <div
               style={{
-                position: "absolute",
-                width: "100%",
-                aspectRatio: "1 / 1",
-                zIndex: "100",
+                position: "relative",
               }}
             >
               <div
                 style={{
-                  height: "50%",
-                  width: "50%",
-                  marginLeft: "5%",
-                  marginTop: "5%",
-                  border: "3vw solid red",
-                  borderRadius: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "red",
-                  fontWeight: "1000",
-                  fontSize: "12vw",
-                  transform: "rotate(-22.5deg)",
+                  position: "absolute",
+                  width: "100%",
+                  aspectRatio: "1 / 1",
+                  zIndex: "100",
                 }}
               >
-                사용
-                <br />
-                완료
+                <div
+                  style={{
+                    height: "50%",
+                    width: "50%",
+                    marginLeft: "5%",
+                    marginTop: "5%",
+                    border: "3vw solid red",
+                    borderRadius: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "red",
+                    fontWeight: "1000",
+                    fontSize: "12vw",
+                    transform: "rotate(-22.5deg)",
+                  }}
+                >
+                  사용
+                  <br />
+                  완료
+                </div>
               </div>
-            </div>
 
-            <img
-              style={{
-                width: "100%",
-                border: "solid",
-                opacity: "0.5",
-              }}
-              alt="gifticon"
-              src={coupon.imgUrl}
-            />
+              <img
+                style={{
+                  width: "100%",
+                  border: "solid",
+                  opacity: "0.5",
+                }}
+                alt="gifticon"
+                src={coupon.imgUrl}
+              />
+            </div>
           </>
         ) : (
           <img
