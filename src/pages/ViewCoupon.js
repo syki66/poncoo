@@ -29,9 +29,13 @@ export default function ViewCoupon() {
       setCoupon(updatedCoupon);
       await CouponDataService.updateCoupon(id, updatedCoupon);
 
-      used
-        ? alert('"사용 완료" 처리되었습니다.')
-        : alert('"사용 복구" 처리 되었습니다.');
+      if (used) {
+        localStorage.setItem("lastPath", "/used/1");
+        alert('"사용 완료" 처리되었습니다.');
+      } else {
+        localStorage.setItem("lastPath", "/unused/1");
+        alert('"사용 복구" 처리 되었습니다.');
+      }
     } catch (error) {
       console.log("사용 완료(복구) 처리중 에러 : ", error);
     }
@@ -93,13 +97,12 @@ export default function ViewCoupon() {
             marginTop: "1em",
           }}
           onClick={() => {
-            const lastPageType = localStorage.getItem("lastPageType");
-            const lastPageNum = localStorage.getItem("lastPageNum");
+            const lastPath = localStorage.getItem("lastPath");
 
-            if (!lastPageNum || !lastPageType) {
+            if (!lastPath) {
               navigate("/unused/1");
             } else {
-              navigate(`/${lastPageType}/${lastPageNum}`);
+              navigate(lastPath);
             }
           }}
           type="ghost"

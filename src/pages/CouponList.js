@@ -9,7 +9,7 @@ import {
   Typography,
   Tabs,
 } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 
 const { Title } = Typography;
@@ -30,6 +30,9 @@ export default function CouponList({
   couponsLen,
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname;
+  localStorage.setItem("lastPath", path);
 
   const handleSelectChange = (value) => {
     const sorted = [...coupons].sort();
@@ -62,8 +65,6 @@ export default function CouponList({
   };
 
   const onPagiChange = (page) => {
-    localStorage.setItem("lastPageType", tabID);
-    localStorage.setItem("lastPageNum", page);
     setPageIndex(page);
     setPosts(
       coupons.slice(
