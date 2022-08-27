@@ -124,29 +124,90 @@ export default function CouponList({
                   border: "solid",
                 }}
               >
-                <Card
-                  onClick={(event) => navigate(`/view/${doc.id}`)}
-                  cover={
-                    <img
-                      alt="coupon"
-                      style={{
-                        width: "100%",
-                        aspectRatio: "1 / 1",
-                        objectFit: "cover",
-                        objectPosition: "50% 10%",
-                        borderBottom: "solid",
-                      }}
-                      src={doc.imgUrl}
+                {tabID === "unused" ? (
+                  <Card
+                    size="small"
+                    onClick={(event) => navigate(`/view/${doc.id}`)}
+                    cover={
+                      <img
+                        alt="coupon"
+                        style={{
+                          width: "100%",
+                          aspectRatio: "1 / 1",
+                          objectFit: "cover",
+                          objectPosition: "50% 10%",
+                          borderBottom: "solid",
+                        }}
+                        src={doc.imgUrl}
+                      />
+                    }
+                  >
+                    <Meta
+                      title={doc.title}
+                      description={`~ ${moment
+                        .unix(doc.expDate)
+                        .format("YYYY년 MM월 DD일")}`}
                     />
-                  }
-                >
-                  <Meta
-                    title={doc.title}
-                    description={`유효기간: ${moment
-                      .unix(doc.expDate)
-                      .format("YYYY년 MM월 DD일")}`}
-                  />
-                </Card>
+                  </Card>
+                ) : (
+                  <Card
+                    size="small"
+                    onClick={(event) => navigate(`/view/${doc.id}`)}
+                    cover={
+                      <>
+                        <div
+                          style={{
+                            position: "absolute",
+                            width: "100%",
+                            aspectRatio: "1 / 1",
+                            zIndex: "100",
+                          }}
+                        >
+                          <div
+                            style={{
+                              height: "90%",
+                              width: "90%",
+                              marginLeft: "5%",
+                              marginTop: "5%",
+                              border: "2vw solid red",
+                              borderRadius: "100%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              color: "red",
+                              fontWeight: "1000",
+                              fontSize: "10vw",
+                              transform: "rotate(-22.5deg)",
+                            }}
+                          >
+                            사용
+                            <br />
+                            완료
+                          </div>
+                        </div>
+                        <img
+                          alt="coupon"
+                          style={{
+                            width: "100%",
+                            aspectRatio: "1 / 1",
+                            objectFit: "cover",
+                            objectPosition: "50% 10%",
+                            borderBottom: "solid",
+                            opacity: "0.5",
+                          }}
+                          src={doc.imgUrl}
+                        />
+                      </>
+                    }
+                  >
+                    <Meta
+                      title={doc.title}
+                      description={`~ ${moment
+                        .unix(doc.expDate)
+                        .format("YYYY년 MM월 DD일")}`}
+                    />
+                  </Card>
+                )}
               </div>
             </Col>
           );
