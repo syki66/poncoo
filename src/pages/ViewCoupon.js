@@ -81,14 +81,59 @@ export default function ViewCoupon() {
           {moment.unix(coupon.expDate).format("YYYY년 MM월 DD일")} 까지
         </Title>
 
-        <img
-          style={{
-            width: "100%",
-            border: "solid",
-          }}
-          alt="gifticon"
-          src={coupon.imgUrl}
-        />
+        {coupon.used ? (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                width: "100%",
+                aspectRatio: "1 / 1",
+                zIndex: "100",
+              }}
+            >
+              <div
+                style={{
+                  height: "50%",
+                  width: "50%",
+                  marginLeft: "5%",
+                  marginTop: "5%",
+                  border: "3vw solid red",
+                  borderRadius: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "red",
+                  fontWeight: "1000",
+                  fontSize: "12vw",
+                  transform: "rotate(-22.5deg)",
+                }}
+              >
+                사용
+                <br />
+                완료
+              </div>
+            </div>
+
+            <img
+              style={{
+                width: "100%",
+                border: "solid",
+                opacity: "0.5",
+              }}
+              alt="gifticon"
+              src={coupon.imgUrl}
+            />
+          </>
+        ) : (
+          <img
+            style={{
+              width: "100%",
+              border: "solid",
+            }}
+            alt="gifticon"
+            src={coupon.imgUrl}
+          />
+        )}
         <Button
           style={{
             backgroundColor: "#a0a0a0",
