@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -11,6 +11,7 @@ import {
 } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -29,10 +30,16 @@ export default function CouponList({
   tabID,
   couponsLen,
 }) {
+  const [currUser, setCurrUser] = useState({});
+  const auth = getAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
   localStorage.setItem("lastPath", path);
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setCurrUser(currentUser);
+  });
 
   const handleSelectChange = (value) => {
     const sorted = [...coupons].sort();
@@ -81,6 +88,11 @@ export default function CouponList({
     } else if (key === "used") {
       navigate("/used/1");
     }
+  };
+
+  const logout = async () => {
+    await signOut(auth);
+    navigate("/");
   };
 
   useEffect(() => {
@@ -245,6 +257,18 @@ export default function CouponList({
         사용 가능 : {couponsLen.unusedLen} 장<br />
         사용 완료 : {couponsLen.usedLen} 장
       </Title>
+      <Title level={5} align="center">
+        사용자 : {currUser?.email}
+      </Title>
+      <Row
+        style={{
+          padding: "1em",
+        }}
+      >
+        <Button onClick={() => logout()} block type="primary">
+          로그아웃
+        </Button>
+      </Row>
     </>
   );
 }

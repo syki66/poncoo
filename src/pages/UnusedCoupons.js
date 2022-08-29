@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CouponList from "./CouponList";
 import CouponDataService from "../services/coupon.services";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const postPerPage = 4;
 
@@ -9,7 +9,6 @@ export default function UnusedCoupons() {
   const [coupons, setCoupons] = useState([]);
   const [posts, setPosts] = useState([]);
   const location = useLocation();
-  const navigate = useNavigate();
   const [pageIndex, setPageIndex] = useState(
     Number(location.pathname.split("/").pop())
   );
@@ -40,8 +39,7 @@ export default function UnusedCoupons() {
       });
     } catch (error) {
       if (error.code === "permission-denied") {
-        alert("접근 불가");
-        navigate("/");
+        alert("권한 없음");
       }
       console.log("쿠폰 리스트 불러오는 도중 에러 : ", error);
     }

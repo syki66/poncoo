@@ -49,8 +49,7 @@ export default function ViewCoupon() {
       });
     } catch (error) {
       if (error.code === "permission-denied") {
-        alert("접근 불가");
-        navigate("/");
+        alert("권한 없음");
       }
       console.log("view get에서 에러발생: ", error);
     }

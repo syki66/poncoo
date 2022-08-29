@@ -52,8 +52,7 @@ export default function AddCoupon() {
       setPrevCoupon(json.data());
     } catch (error) {
       if (error.code === "permission-denied") {
-        alert("접근 불가");
-        navigate("/");
+        alert("권한 없음");
       }
       console.log("edit에서 get할때 에러 발생: ", error);
     }

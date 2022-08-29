@@ -1,29 +1,29 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 
 import {
   getAuth,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut,
 } from "firebase/auth";
 
 const { Title } = Typography;
 
 export default function Login() {
-  const [user, setUser] = useState({});
+  const [currUser, setCurrUser] = useState({});
+  const navigate = useNavigate();
   const auth = getAuth();
 
+  // state 값을 받아오기 위해 존재. 없어도 로그인은 유지됨
   onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
+    setCurrUser(currentUser);
   });
 
   const login = async (email, password) => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user);
     } catch (error) {
       if (error.code === "auth/invalid-email") {
         alert("유효하지 않은 이메일입니다.");
@@ -37,13 +37,16 @@ export default function Login() {
     }
   };
 
-  const logout = async () => {
-    await signOut(auth);
-  };
-
   const onFinish = (values) => {
     login(values.email, values.password);
   };
+
+  useEffect(() => {
+    if (currUser?.email) {
+      navigate("/unused/1");
+    }
+  });
+
   return (
     <>
       <div style={{ textAlign: "center", paddingTop: "1em" }}>
@@ -108,9 +111,6 @@ export default function Login() {
           </Form.Item>
         </Form.Item>
       </Form>
-
-      <div>{user?.email}</div>
-      {/* <Link to="/unused/1">go Coupon</Link> */}
     </>
   );
 }
