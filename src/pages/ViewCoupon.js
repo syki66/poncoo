@@ -101,9 +101,20 @@ export default function ViewCoupon() {
           align="right"
           style={{
             color: "lightGray",
+            marginBottom: "0em",
           }}
         >
-          생성일 : {moment.unix(coupon.currDate).format("YYYY-MM-DD")}
+          수정일 : {moment.unix(coupon.currDate).format("YYYY-MM-DD")}
+        </Title>
+        <Title
+          level={5}
+          align="right"
+          style={{
+            color: "lightGray",
+            marginTop: "0em",
+          }}
+        >
+          수정인 : {coupon.userEmail}
         </Title>
         <Title
           align="center"

@@ -14,11 +14,6 @@
 
 - 광고 삽입
 
-- 사용완료된 쿠폰들에 대해서 삭제 버튼 활성화 (사진과 db 같이 삭제하기)
-- 최종 수정자 db에 기록
-- auth state 사용하고 나서는 localStorage 사용해도 될듯.
 - localStorage -> redux 대체하기
 
-- 수정시 기존 이미지 삭제
-- add에서 이미지 이름 json에 넣기
-- tabID들어간 경로 lastPass로 바꾸기
+- 누가 데이터 변경했을 경우, 푸시 알림 보내주고, db에 기록 -> notification 탭에서 볼 수 있게 하기

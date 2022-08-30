@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Card,
@@ -137,17 +137,30 @@ export default function CouponList({
                     size="small"
                     onClick={(event) => navigate(`/view/${doc.id}`)}
                     cover={
-                      <img
-                        alt="coupon"
-                        style={{
-                          width: "100%",
-                          aspectRatio: "1 / 1",
-                          objectFit: "cover",
-                          objectPosition: "50% 10%",
-                          borderBottom: "solid",
-                        }}
-                        src={doc.imgUrl}
-                      />
+                      <div style={{ position: "relative" }}>
+                        <div
+                          style={{
+                            position: "absolute",
+                            bottom: "0.3em",
+                            right: "0.3em",
+                            zIndex: "100",
+                            textShadow: `-0.1em 0 #fef957, 0 0.1em #fef957, 0.1em 0 #fef957, 0 -0.1em #fef957`,
+                          }}
+                        >
+                          {doc.userEmail.split("@")[0]}
+                        </div>
+                        <img
+                          alt="coupon"
+                          style={{
+                            width: "100%",
+                            aspectRatio: "1 / 1",
+                            objectFit: "cover",
+                            objectPosition: "50% 10%",
+                            borderBottom: "solid",
+                          }}
+                          src={doc.imgUrl}
+                        />
+                      </div>
                     }
                   >
                     <Meta
@@ -192,6 +205,17 @@ export default function CouponList({
                               사용
                               <br />
                               완료
+                            </div>
+                            <div
+                              style={{
+                                position: "absolute",
+                                bottom: "0.3em",
+                                right: "0.3em",
+                                zIndex: "100",
+                                textShadow: `-0.1em 0 #fef957, 0 0.1em #fef957, 0.1em 0 #fef957, 0 -0.1em #fef957`,
+                              }}
+                            >
+                              {doc.userEmail.split("@")[0]}
                             </div>
                           </div>
                           <img
