@@ -3,7 +3,6 @@ import { Button, DatePicker, Form, Input, message, Upload } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import moment from "moment";
 import CouponDataService from "../services/coupon.services";
-import { v4 } from "uuid";
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -60,14 +59,13 @@ export default function AddCoupon() {
 
   const onFinish = async (values) => {
     const { title, expDate, upload } = values;
-    const uuid = v4();
 
     if (imgChanged) {
       // 이미지를 바꾸었을 경우
       if (!checkVal(upload[0].originFileObj)) {
         return false;
       } else {
-        const imageRef = ref(storage, `images/${uuid}`);
+        const imageRef = ref(storage, prevCoupon.imagePath);
         uploadBytes(imageRef, upload[0].originFileObj)
           .then(() => {
             console.log(`이미지 업로드가 성공하였습니다.`);
@@ -79,6 +77,8 @@ export default function AddCoupon() {
                   expDate: expDate.unix(),
                   imgUrl: url,
                   used: prevCoupon.used,
+                  imagePath: prevCoupon.imagePath,
+                  userEmail: localStorage.getItem("userEmail"),
                 };
                 CouponDataService.updateCoupon(id, updatedCoupon)
                   .then(() => {
@@ -105,6 +105,8 @@ export default function AddCoupon() {
         expDate: expDate.unix(),
         imgUrl: prevCoupon.imgUrl,
         used: prevCoupon.used,
+        imagePath: prevCoupon.imagePath,
+        userEmail: localStorage.getItem("userEmail"),
       };
       CouponDataService.updateCoupon(id, updatedCoupon)
         .then(() => {

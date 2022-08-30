@@ -27,6 +27,7 @@ const checkVal = (file) => {
 
 export default function AddCoupon() {
   const navigate = useNavigate();
+
   const onFinish = async (values) => {
     const { title, expDate, upload } = values;
     const uuid = v4();
@@ -46,6 +47,8 @@ export default function AddCoupon() {
                 expDate: expDate.unix(),
                 imgUrl: url,
                 used: false,
+                imagePath: `images/${uuid}`,
+                userEmail: localStorage.getItem("userEmail"),
               };
               CouponDataService.addCoupons(newCoupon)
                 .then(() => {

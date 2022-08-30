@@ -14,7 +14,6 @@ export default function ViewCoupon() {
   const navigate = useNavigate();
   const storage = getStorage();
   const id = location.pathname.split("/").pop();
-  const lastPath = localStorage.getItem("lastPath");
 
   const doComplete = async (used) => {
     if (used) {
@@ -28,6 +27,7 @@ export default function ViewCoupon() {
         ...coupon,
         currDate: moment().unix(),
         used: used,
+        userEmail: localStorage.getItem("userEmail"),
       };
       setCoupon(updatedCoupon);
       await CouponDataService.updateCoupon(id, updatedCoupon);
@@ -44,14 +44,14 @@ export default function ViewCoupon() {
     }
   };
 
-  const deleteImage = (name) => {
-    const desertRef = ref(storage, `images/${name}`);
+  const deleteImage = () => {
+    const desertRef = ref(storage, coupon.imagePath);
     deleteObject(desertRef)
       .then(() => {
         console.log("이미지가 삭제되었습니다.");
       })
       .catch((error) => {
-        console.log("쿠폰 삭제중 에러발생 :", error);
+        console.log("쿠폰 이미지 삭제중 에러발생 :", error);
       });
   };
 
@@ -63,12 +63,12 @@ export default function ViewCoupon() {
       return false;
     }
     try {
-      // deleteImage(coupon.imgName);
+      deleteImage(coupon.imgName);
       await CouponDataService.deleteCoupon(id);
       alert("삭제되었습니다.");
-      navigate(`${lastPath}`);
+      navigate(`/used/1`);
     } catch (error) {
-      console.log("삭제시 에러 : ", error);
+      console.log("쿠폰 데이터 삭제시 에러 : ", error);
     }
   };
 
