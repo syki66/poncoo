@@ -18,3 +18,7 @@
 - 최종 수정자 db에 기록
 - auth state 사용하고 나서는 localStorage 사용해도 될듯.
 - localStorage -> redux 대체하기
+
+- 수정시 기존 이미지 삭제
+- add에서 이미지 이름 json에 넣기
+- tabID들어간 경로 lastPass로 바꾸기

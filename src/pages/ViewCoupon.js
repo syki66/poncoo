@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import CouponDataService from "../services/coupon.services";
 import { Typography } from "antd";
+import { getStorage, ref, deleteObject } from "firebase/storage";
 
 const { Title } = Typography;
 
@@ -11,7 +12,9 @@ export default function ViewCoupon() {
   const [coupon, setCoupon] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
+  const storage = getStorage();
   const id = location.pathname.split("/").pop();
+  const lastPath = localStorage.getItem("lastPath");
 
   const doComplete = async (used) => {
     if (used) {
@@ -38,6 +41,34 @@ export default function ViewCoupon() {
       }
     } catch (error) {
       console.log("사용 완료(복구) 처리중 에러 : ", error);
+    }
+  };
+
+  const deleteImage = (name) => {
+    const desertRef = ref(storage, `images/${name}`);
+    deleteObject(desertRef)
+      .then(() => {
+        console.log("이미지가 삭제되었습니다.");
+      })
+      .catch((error) => {
+        console.log("쿠폰 삭제중 에러발생 :", error);
+      });
+  };
+
+  const deleteCoupon = async () => {
+    const result = window.confirm(
+      '정말 쿠폰을 "삭제" 하시겠습니까? \n\n ※이 작업은 되돌릴 수 없습니다※'
+    );
+    if (!result) {
+      return false;
+    }
+    try {
+      // deleteImage(coupon.imgName);
+      await CouponDataService.deleteCoupon(id);
+      alert("삭제되었습니다.");
+      navigate(`${lastPath}`);
+    } catch (error) {
+      console.log("삭제시 에러 : ", error);
     }
   };
 
@@ -181,20 +212,46 @@ export default function ViewCoupon() {
         </Button>
         {coupon.used
           ? coupon.used !== undefined && (
-              <Button
-                type="ghost"
-                block
-                onClick={(e) => doComplete(false)}
-                style={{
-                  backgroundColor: "#55ab55",
-                  color: "white",
-                  padding: "0.5em",
-                  marginTop: "0.5em",
-                  zIndex: "1000",
-                }}
-              >
-                복구
-              </Button>
+              <>
+                <Button
+                  type="ghost"
+                  block
+                  onClick={(e) => doComplete(false)}
+                  style={{
+                    backgroundColor: "#55ab55",
+                    color: "white",
+                    padding: "0.5em",
+                    marginTop: "0.5em",
+                    zIndex: "1000",
+                  }}
+                >
+                  복구
+                </Button>
+
+                <Title
+                  type="danger"
+                  style={{
+                    marginTop: "10em",
+                  }}
+                  align="center"
+                >
+                  ※주의※
+                </Title>
+                <Title level={5} align="center" type="danger">
+                  삭제되면 복구가 불가능합니다.
+                </Title>
+                <Button
+                  type="primary"
+                  danger
+                  block
+                  onClick={(e) => deleteCoupon()}
+                  style={{
+                    zIndex: "1000",
+                  }}
+                >
+                  삭제
+                </Button>
+              </>
             )
           : coupon.used !== undefined && (
               <Button
