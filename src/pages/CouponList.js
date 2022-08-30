@@ -37,10 +37,6 @@ export default function CouponList({
   const path = location.pathname;
   localStorage.setItem("lastPath", path);
 
-  onAuthStateChanged(auth, (currentUser) => {
-    setCurrUser(currentUser);
-  });
-
   const handleSelectChange = (value) => {
     const sorted = [...coupons].sort();
     if (value === "curr_descending") {
@@ -97,6 +93,9 @@ export default function CouponList({
 
   useEffect(() => {
     getCoupons();
+    onAuthStateChanged(auth, (currentUser) => {
+      setCurrUser(currentUser);
+    });
   }, []);
   return (
     <>

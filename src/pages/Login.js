@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { Button, Form, Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -15,11 +15,6 @@ export default function Login() {
   const [currUser, setCurrUser] = useState({});
   const navigate = useNavigate();
   const auth = getAuth();
-
-  // state 값을 받아오기 위해 존재. 없어도 로그인은 유지됨
-  onAuthStateChanged(auth, (currentUser) => {
-    setCurrUser(currentUser);
-  });
 
   const login = async (email, password) => {
     try {
@@ -42,10 +37,14 @@ export default function Login() {
   };
 
   useEffect(() => {
+    // state 값을 받아오기 위해 존재. 없어도 로그인은 유지됨
+    onAuthStateChanged(auth, (currentUser) => {
+      setCurrUser(currentUser);
+    });
     if (currUser?.email) {
       navigate("/unused/1");
     }
-  });
+  }, [currUser]);
 
   return (
     <>
@@ -103,12 +102,6 @@ export default function Login() {
           >
             로그인
           </Button>
-        </Form.Item>
-
-        <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>로그인 상태 유지</Checkbox>
-          </Form.Item>
         </Form.Item>
       </Form>
     </>
