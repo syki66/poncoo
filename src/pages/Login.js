@@ -19,6 +19,7 @@ export default function Login() {
   const login = async (email, password) => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
+      localStorage.setItem("userEmail", user.user.email);
     } catch (error) {
       if (error.code === "auth/invalid-email") {
         alert("유효하지 않은 이메일입니다.");
@@ -62,6 +63,7 @@ export default function Login() {
           padding: "1em",
         }}
         onFinish={onFinish}
+        // autoComplete="off"
       >
         <Form.Item
           name="email"

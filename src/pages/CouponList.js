@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -30,7 +30,6 @@ export default function CouponList({
   tabID,
   couponsLen,
 }) {
-  const [currUser, setCurrUser] = useState({});
   const auth = getAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -88,14 +87,12 @@ export default function CouponList({
 
   const logout = async () => {
     await signOut(auth);
+    localStorage.clear();
     navigate("/");
   };
 
   useEffect(() => {
     getCoupons();
-    onAuthStateChanged(auth, (currentUser) => {
-      setCurrUser(currentUser);
-    });
   }, []);
   return (
     <>
@@ -257,7 +254,7 @@ export default function CouponList({
         사용 완료 : {couponsLen.usedLen} 장
       </Title>
       <Title level={5} align="center">
-        사용자 : {currUser?.email}
+        사용자 : {localStorage.getItem("userEmail")}
       </Title>
       <Row
         style={{

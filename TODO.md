@@ -16,3 +16,5 @@
 
 - 사용완료된 쿠폰들에 대해서 삭제 버튼 활성화 (사진과 db 같이 삭제하기)
 - 최종 수정자 db에 기록
+- auth state 사용하고 나서는 localStorage 사용해도 될듯.
+- localStorage -> redux 대체하기
