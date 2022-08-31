@@ -1,5 +1,13 @@
-import React from "react";
-import { Button, DatePicker, Form, Input, message, Upload } from "antd";
+import React, { useState } from "react";
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  message,
+  Upload,
+  Typography,
+} from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
 import CouponDataService from "../services/coupon.services";
@@ -8,6 +16,8 @@ import { v4 } from "uuid";
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
+
+const { Title } = Typography;
 
 const checkVal = (file) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -28,7 +38,13 @@ const checkVal = (file) => {
 export default function AddCoupon() {
   const navigate = useNavigate();
 
+  const [disableSubmit, setDisableSubmit] = useState(false);
+  const [submitMsg, setSubmitMsg] = useState("저장");
+
   const onFinish = async (values) => {
+    setDisableSubmit(true);
+    setSubmitMsg("잠시만 기다려주세요");
+
     const { title, expDate, upload } = values;
     const uuid = v4();
 
@@ -54,7 +70,7 @@ export default function AddCoupon() {
                 .then(() => {
                   console.log("저장되었습니다.");
                   alert("저장되었습니다.");
-                  navigate(-1);
+                  navigate("/unused/1");
                 })
                 .catch((error) => {
                   console.log("저장 오류 발생 : ", error);
@@ -86,86 +102,92 @@ export default function AddCoupon() {
   };
 
   return (
-    <Form
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-      style={{ padding: "1em" }}
-    >
-      <Form.Item
-        label="제목"
-        name="title"
-        rules={[
-          {
-            required: true,
-            message: "제목은 반드시 입력해야 합니다.",
-          },
-        ]}
+    <>
+      <Title level={1} align="center" style={{ marginTop: "0.5em" }}>
+        새 쿠폰 추가
+      </Title>
+      <Form
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+        style={{ padding: "1em" }}
       >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        label="유효기간"
-        name="expDate"
-        rules={[
-          {
-            required: true,
-            message: "유효기간은 반드시 입력해야 합니다.",
-          },
-        ]}
-      >
-        <DatePicker />
-      </Form.Item>
-
-      <Form.Item
-        name="upload"
-        label="Upload"
-        valuePropName="fileList"
-        getValueFromEvent={normFile}
-        rules={[
-          {
-            required: true,
-            message: "사진은 반드시 첨부해야 합니다.",
-          },
-        ]}
-      >
-        <Upload name="logo" listType="picture-card" maxCount={1}>
-          <div>
-            <PlusOutlined />
-            <div
-              style={{
-                marginTop: 8,
-              }}
-            >
-              Upload
+        <Form.Item
+          name="upload"
+          label="쿠폰 이미지 (최대 1장)"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+          rules={[
+            {
+              required: true,
+              message: "사진은 반드시 첨부해야 합니다.",
+            },
+          ]}
+        >
+          <Upload name="logo" listType="picture-card" maxCount={1}>
+            <div>
+              <PlusOutlined />
+              <div
+                style={{
+                  marginTop: 8,
+                }}
+              >
+                쿠폰 선택
+              </div>
             </div>
-          </div>
-        </Upload>
-      </Form.Item>
+          </Upload>
+        </Form.Item>
 
-      <Form.Item>
-        <Button
-          style={{
-            backgroundColor: "#a0a0a0",
-            color: "white",
-            borderColor: "gray",
-          }}
-          onClick={() => navigate(-1)}
-          type="ghost"
-          block
+        <Form.Item
+          label="제목"
+          name="title"
+          rules={[
+            {
+              required: true,
+              message: "제목은 반드시 입력해야 합니다.",
+            },
+          ]}
         >
-          이전
-        </Button>
-        <Button
-          style={{ marginTop: "0.5em" }}
-          type="primary"
-          block
-          htmlType="submit"
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="유효기간"
+          name="expDate"
+          rules={[
+            {
+              required: true,
+              message: "유효기간은 반드시 입력해야 합니다.",
+            },
+          ]}
         >
-          저장
-        </Button>
-      </Form.Item>
-    </Form>
+          <DatePicker placeholder="유효기간 선택" />
+        </Form.Item>
+
+        <Form.Item>
+          <Button
+            style={{
+              backgroundColor: "#a0a0a0",
+              color: "white",
+              borderColor: "gray",
+            }}
+            onClick={() => navigate(-1)}
+            type="ghost"
+            block
+          >
+            이전
+          </Button>
+          <Button
+            style={{ marginTop: "0.5em" }}
+            type="primary"
+            disabled={disableSubmit}
+            block
+            htmlType="submit"
+          >
+            {submitMsg}
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
   );
 }
