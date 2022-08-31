@@ -161,7 +161,7 @@ export default function AddCoupon() {
             },
           ]}
         >
-          <DatePicker placeholder="유효기간 선택" />
+          <DatePicker inputReadOnly placeholder="유효기간 선택" />
         </Form.Item>
 
         <Form.Item>
