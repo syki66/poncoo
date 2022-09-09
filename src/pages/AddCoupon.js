@@ -16,6 +16,8 @@ import { v4 } from "uuid";
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
+import { sendMessage } from "../utils/sendMessage";
+import notificationService from "../services/notification.service";
 
 const { Title } = Typography;
 
@@ -71,6 +73,25 @@ export default function AddCoupon() {
                   console.log("저장되었습니다.");
                   alert("저장되었습니다.");
                   navigate("/unused/1");
+                  sendMessage(
+                    `쿠폰 추가 : ${title}`,
+                    `수정인 : ${localStorage.getItem("userEmail")}`,
+                    url,
+                    JSON.parse(localStorage.getItem("tokens"))
+                  );
+                  notificationService
+                    .addNotis({
+                      date: moment().unix(),
+                      title: `쿠폰 추가 : ${title}`,
+                      userEmail: `수정인 : ${localStorage.getItem(
+                        "userEmail"
+                      )}`,
+                      imgUrl: url,
+                    })
+                    .then((res) => {
+                      console.log("noti succ add", res);
+                    })
+                    .catch((err) => console.log("noti error add", err));
                 })
                 .catch((error) => {
                   console.log("저장 오류 발생 : ", error);

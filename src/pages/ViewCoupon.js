@@ -5,6 +5,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import CouponDataService from "../services/coupon.services";
 import { Typography } from "antd";
 import { getStorage, ref, deleteObject } from "firebase/storage";
+import { sendMessage } from "../utils/sendMessage";
+import notificationService from "../services/notification.service";
 
 const { Title } = Typography;
 
@@ -35,9 +37,43 @@ export default function ViewCoupon() {
       if (used) {
         localStorage.setItem("lastPath", "/used/1");
         alert('"사용 완료" 처리되었습니다.');
+        sendMessage(
+          `쿠폰 사용 : ${coupon.title}`,
+          `수정인 : ${localStorage.getItem("userEmail")}`,
+          coupon.imgUrl,
+          JSON.parse(localStorage.getItem("tokens"))
+        );
+        notificationService
+          .addNotis({
+            date: moment().unix(),
+            title: `쿠폰 사용 : ${coupon.title}`,
+            userEmail: `수정인 : ${localStorage.getItem("userEmail")}`,
+            imgUrl: coupon.imgUrl,
+          })
+          .then((res) => {
+            console.log("noti succ compl", res);
+          })
+          .catch((err) => console.log("noti error compl", err));
       } else {
         localStorage.setItem("lastPath", "/unused/1");
         alert('"사용 복구" 처리 되었습니다.');
+        sendMessage(
+          `쿠폰 복구 : ${coupon.title}`,
+          `수정인 : ${localStorage.getItem("userEmail")}`,
+          coupon.imgUrl,
+          JSON.parse(localStorage.getItem("tokens"))
+        );
+        notificationService
+          .addNotis({
+            date: moment().unix(),
+            title: `쿠폰 복구 : ${coupon.title}`,
+            userEmail: `수정인 : ${localStorage.getItem("userEmail")}`,
+            imgUrl: coupon.imgUrl,
+          })
+          .then((res) => {
+            console.log("noti succ unCompl", res);
+          })
+          .catch((err) => console.log("noti error unCompl", err));
       }
     } catch (error) {
       console.log("사용 완료(복구) 처리중 에러 : ", error);
@@ -63,10 +99,27 @@ export default function ViewCoupon() {
       return false;
     }
     try {
-      deleteImage(coupon.imgName);
+      deleteImage();
       await CouponDataService.deleteCoupon(id);
       alert("삭제되었습니다.");
       navigate(`/used/1`);
+      sendMessage(
+        `쿠폰 삭제 : ${coupon.title}`,
+        `수정인 : ${localStorage.getItem("userEmail")}`,
+        coupon.imgUrl,
+        JSON.parse(localStorage.getItem("tokens"))
+      );
+      notificationService
+        .addNotis({
+          date: moment().unix(),
+          title: `쿠폰 삭제 : ${coupon.title}`,
+          userEmail: `수정인 : ${localStorage.getItem("userEmail")}`,
+          imgUrl: coupon.imgUrl,
+        })
+        .then((res) => {
+          console.log("noti succ del", res);
+        })
+        .catch((err) => console.log("noti error del", err));
     } catch (error) {
       console.log("쿠폰 데이터 삭제시 에러 : ", error);
     }

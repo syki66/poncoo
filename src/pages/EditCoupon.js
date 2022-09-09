@@ -14,6 +14,8 @@ import CouponDataService from "../services/coupon.services";
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useLocation, useNavigate } from "react-router-dom";
+import { sendMessage } from "../utils/sendMessage";
+import notificationService from "../services/notification.service";
 
 const { Title } = Typography;
 
@@ -98,8 +100,27 @@ export default function AddCoupon() {
                 };
                 CouponDataService.updateCoupon(id, updatedCoupon)
                   .then(() => {
-                    alert("수정되었습니다. (이미지 교체)");
+                    alert("수정되었습니다. (사진 교체)");
                     navigate(`/view/${id}`);
+                    sendMessage(
+                      `쿠폰 수정 (사진 교체) : ${title}`,
+                      `수정인 : ${localStorage.getItem("userEmail")}`,
+                      url,
+                      JSON.parse(localStorage.getItem("tokens"))
+                    );
+                    notificationService
+                      .addNotis({
+                        date: moment().unix(),
+                        title: `쿠폰 수정 (사진 교체) : ${title}`,
+                        userEmail: `수정인 : ${localStorage.getItem(
+                          "userEmail"
+                        )}`,
+                        imgUrl: url,
+                      })
+                      .then((res) => {
+                        console.log("noti succ edit", res);
+                      })
+                      .catch((err) => console.log("noti error edit", err));
                   })
                   .catch((error) => {
                     console.log("수정시 오류 발생 (새 이미지) : ", error);
@@ -126,8 +147,25 @@ export default function AddCoupon() {
       };
       CouponDataService.updateCoupon(id, updatedCoupon)
         .then(() => {
-          alert("수정되었습니다. (이미지 유지)");
+          alert("수정되었습니다. (사진 유지)");
           navigate(`/view/${id}`);
+          sendMessage(
+            `쿠폰 수정 (사진 유지) : ${title}`,
+            `수정인 : ${localStorage.getItem("userEmail")}`,
+            prevCoupon.imgUrl,
+            JSON.parse(localStorage.getItem("tokens"))
+          );
+          notificationService
+            .addNotis({
+              date: moment().unix(),
+              title: `쿠폰 수정 (사진 유지) : ${title}`,
+              userEmail: `수정인 : ${localStorage.getItem("userEmail")}`,
+              imgUrl: prevCoupon.imgUrl,
+            })
+            .then((res) => {
+              console.log("noti succ edit", res);
+            })
+            .catch((err) => console.log("noti error edit", err));
         })
         .catch((error) => {
           console.log("수정시 오류 발생 (이미지 유지) : ", error);
