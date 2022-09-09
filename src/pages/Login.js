@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import { sendMessage } from "../utils/postFirebaseMessage";
+import { initToken } from "../utils/initToken";
 
 import {
   getAuth,
   signInWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
-import ViewToken from "./ViewToken";
+
+// import ViewToken from "../components/ViewToken";
 
 const { Title } = Typography;
 
@@ -22,6 +23,7 @@ export default function Login() {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
       localStorage.setItem("userEmail", user.user.email);
+      initToken();
     } catch (error) {
       if (error.code === "auth/invalid-email") {
         alert("유효하지 않은 이메일입니다.");
@@ -47,13 +49,6 @@ export default function Login() {
     if (currUser?.email) {
       navigate("/unused/1");
     }
-    sendMessage(
-      "asdf",
-      "asdfsadf",
-      "https://www.naver.com",
-      "https://image.shutterstock.com/image-vector/sample-stamp-rubber-style-red-260nw-1811246308.jpg",
-      "dQuL2ixVf1-7M-Poxru6tW:APA91bEUMep6BSwl_aTO8r0d2LhMbW-BwttkQkAkIc6zjINtHvXvITsQyOYz-DUaEqan1l8DrfnRlEanuSmqMZbXiHxmqQykEPQUkPU5BqFlxHVpJCrdswtrqt3oTt8lC0pNQrHnCR3Y"
-    );
   }, [currUser]);
 
   return (
@@ -115,7 +110,7 @@ export default function Login() {
           </Button>
         </Form.Item>
       </Form>
-      <ViewToken />
+      {/* <ViewToken /> */}
     </>
   );
 }

@@ -15,7 +15,7 @@ firebase.initializeApp({
   measurementId: "G-PC3WLF2BEB",
 });
 
-const messaging = firebase.messaging(); // 여기까지만 적으면 클라우드 메세지 송신 가능
+const messaging = firebase.messaging(); // 여기까지만 적으면 클라우드 메세지 수신 가능
 
 // messaging.onMessage((payload) => {
 //   console.log("fg msg: ", payload);

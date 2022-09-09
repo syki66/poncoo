@@ -2,7 +2,7 @@ import axios from "axios";
 
 const url = "https://fcm.googleapis.com/fcm/send";
 
-const sendMessage = async (title, desc, action, icon, token) => {
+const sendMessage = async (title, desc, image, token) => {
   const headers = {
     "content-type": "application/json",
     Authorization:
@@ -12,10 +12,10 @@ const sendMessage = async (title, desc, action, icon, token) => {
     notification: {
       title: title,
       body: desc,
-      click_action: action,
-      icon: icon,
+      icon: "./favicon.ico",
+      image: image,
     },
-    to: token,
+    registration_ids: token,
   };
   try {
     const res = await axios.post(url, data, { headers: headers });
