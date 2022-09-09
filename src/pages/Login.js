@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
+import ViewToken from "./ViewToken";
 
 const { Title } = Typography;
 
@@ -106,6 +107,7 @@ export default function Login() {
           </Button>
         </Form.Item>
       </Form>
+      <ViewToken />
     </>
   );
 }
