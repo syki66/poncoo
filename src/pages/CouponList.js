@@ -9,6 +9,7 @@ import {
   Typography,
   Tabs,
 } from "antd";
+import { NotificationOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { getAuth, signOut } from "firebase/auth";
@@ -118,10 +119,30 @@ export default function CouponList({
         </Col>
       </Row>
       <Row style={{ padding: "0.5em" }}>
-        <Tabs defaultActiveKey={tabID} onChange={onTabChange}>
-          <TabPane tab="사용가능" key="unused"></TabPane>
-          <TabPane tab="사용완료" key="used"></TabPane>
-        </Tabs>
+        <Col span={12}>
+          <Tabs defaultActiveKey={tabID} onChange={onTabChange}>
+            <TabPane tab="사용가능" key="unused"></TabPane>
+            <TabPane tab="사용완료" key="used"></TabPane>
+          </Tabs>
+        </Col>
+        <Col
+          span={12}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "end",
+            padding: "0.5em",
+          }}
+        >
+          <Button
+            onClick={(event) => navigate(`/notification`)}
+            style={{
+              backgroundColor: "#fef957",
+            }}
+          >
+            <NotificationOutlined />
+          </Button>
+        </Col>
       </Row>
       <Row>
         {posts.map((doc) => {
