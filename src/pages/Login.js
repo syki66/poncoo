@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
+import { sendMessage } from "../utils/postFirebaseMessage";
 
 import {
   getAuth,
@@ -46,6 +47,13 @@ export default function Login() {
     if (currUser?.email) {
       navigate("/unused/1");
     }
+    sendMessage(
+      "asdf",
+      "asdfsadf",
+      "https://www.naver.com",
+      "https://image.shutterstock.com/image-vector/sample-stamp-rubber-style-red-260nw-1811246308.jpg",
+      "dQuL2ixVf1-7M-Poxru6tW:APA91bEUMep6BSwl_aTO8r0d2LhMbW-BwttkQkAkIc6zjINtHvXvITsQyOYz-DUaEqan1l8DrfnRlEanuSmqMZbXiHxmqQykEPQUkPU5BqFlxHVpJCrdswtrqt3oTt8lC0pNQrHnCR3Y"
+    );
   }, [currUser]);
 
   return (

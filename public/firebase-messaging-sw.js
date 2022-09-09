@@ -15,23 +15,23 @@ firebase.initializeApp({
   measurementId: "G-PC3WLF2BEB",
 });
 
-const messaging = firebase.messaging();
+const messaging = firebase.messaging(); // 여기까지만 적으면 클라우드 메세지 송신 가능
 
-messaging.onMessage((payload) => {
-  console.log("fg msg: ", payload);
-});
+// messaging.onMessage((payload) => {
+//   console.log("fg msg: ", payload);
+// });
 
-messaging.onBackgroundMessage((payload) => {
-  console.log("bg msg: ", payload);
+// messaging.onBackgroundMessage((payload) => {
+//   console.log("bg msg: ", payload);
 
-  const notificationTitle = "Background Message Title";
-  const notificationOptions = {
-    body: "Background Message body.",
-    icon: "./logo192.png",
-  };
+//   const notificationTitle = "Background Message Title";
+//   const notificationOptions = {
+//     body: "Background Message body.",
+//     icon: "./logo192.png",
+//   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});
+//   self.registration.showNotification(notificationTitle, notificationOptions);
+// });
 
 // 레거시 서버키 삭제해도 되는지..?
 // foreground 메세지 작동안함
