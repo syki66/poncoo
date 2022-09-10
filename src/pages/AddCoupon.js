@@ -82,7 +82,8 @@ export default function AddCoupon() {
                   notificationService
                     .addNotis({
                       date: moment().unix(),
-                      title: `쿠폰 추가 : ${title}`,
+                      type: "쿠폰 추가",
+                      title: title,
                       userEmail: `수정인 : ${localStorage.getItem(
                         "userEmail"
                       )}`,

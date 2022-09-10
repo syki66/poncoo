@@ -46,7 +46,8 @@ export default function ViewCoupon() {
         notificationService
           .addNotis({
             date: moment().unix(),
-            title: `쿠폰 사용 : ${coupon.title}`,
+            type: "쿠폰 사용",
+            title: coupon.title,
             userEmail: `수정인 : ${localStorage.getItem("userEmail")}`,
             imgUrl: coupon.imgUrl,
           })
@@ -66,7 +67,8 @@ export default function ViewCoupon() {
         notificationService
           .addNotis({
             date: moment().unix(),
-            title: `쿠폰 복구 : ${coupon.title}`,
+            type: "쿠폰 복구",
+            title: coupon.title,
             userEmail: `수정인 : ${localStorage.getItem("userEmail")}`,
             imgUrl: coupon.imgUrl,
           })
@@ -112,7 +114,8 @@ export default function ViewCoupon() {
       notificationService
         .addNotis({
           date: moment().unix(),
-          title: `쿠폰 삭제 : ${coupon.title}`,
+          type: "쿠폰 삭제",
+          title: coupon.title,
           userEmail: `수정인 : ${localStorage.getItem("userEmail")}`,
           imgUrl: coupon.imgUrl,
         })

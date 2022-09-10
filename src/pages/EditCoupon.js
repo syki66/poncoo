@@ -111,7 +111,8 @@ export default function AddCoupon() {
                     notificationService
                       .addNotis({
                         date: moment().unix(),
-                        title: `쿠폰 수정 (사진 교체) : ${title}`,
+                        type: "쿠폰 수정 (사진 교체)",
+                        title: title,
                         userEmail: `수정인 : ${localStorage.getItem(
                           "userEmail"
                         )}`,
@@ -158,7 +159,8 @@ export default function AddCoupon() {
           notificationService
             .addNotis({
               date: moment().unix(),
-              title: `쿠폰 수정 (사진 유지) : ${title}`,
+              type: "쿠폰 수정 (사진 유지)",
+              title: title,
               userEmail: `수정인 : ${localStorage.getItem("userEmail")}`,
               imgUrl: prevCoupon.imgUrl,
             })

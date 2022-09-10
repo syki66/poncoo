@@ -127,7 +127,15 @@ export default function Notification() {
                   borderBottom: "solid",
                 }}
               />
-              <List.Item.Meta title={item.title} description={item.userEmail} />
+              <List.Item.Meta
+                title={
+                  <>
+                    <div>{item.type}</div>
+                    <div>{item.title}</div>
+                  </>
+                }
+                description={item.userEmail}
+              />
               <div>{calculateDates(item.date)}</div>
             </List.Item>
           )}
