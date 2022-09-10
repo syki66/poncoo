@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import { initToken } from "../utils/initToken";
 
 import {
   getAuth,
@@ -23,7 +22,6 @@ export default function Login() {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
       localStorage.setItem("userEmail", user.user.email);
-      initToken();
     } catch (error) {
       if (error.code === "auth/invalid-email") {
         alert("유효하지 않은 이메일입니다.");

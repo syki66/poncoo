@@ -19,7 +19,7 @@ const sendMessage = async (title, desc, image, token) => {
   };
   try {
     const res = await axios.post(url, data, { headers: headers });
-    console.log(res);
+    // console.log(res);
   } catch (error) {
     console.log("fcm send 에러: ", error);
   }

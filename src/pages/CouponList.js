@@ -9,10 +9,11 @@ import {
   Typography,
   Tabs,
 } from "antd";
-import { NotificationOutlined } from "@ant-design/icons";
+import { NotificationOutlined, SyncOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { getAuth, signOut } from "firebase/auth";
+import { initToken } from "../utils/initToken";
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -94,6 +95,7 @@ export default function CouponList({
 
   useEffect(() => {
     getCoupons();
+    initToken();
   }, []);
   return (
     <>
@@ -126,18 +128,34 @@ export default function CouponList({
           </Tabs>
         </Col>
         <Col
-          span={12}
+          span={6}
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "end",
             padding: "0.5em",
           }}
         >
           <Button
+            block
+            onClick={(event) => navigate(0)}
+            style={{
+              backgroundColor: "pink",
+              height: "100%",
+            }}
+          >
+            <SyncOutlined />
+          </Button>
+        </Col>
+        <Col
+          span={6}
+          style={{
+            padding: "0.5em",
+          }}
+        >
+          <Button
+            block
             onClick={(event) => navigate(`/notification`)}
             style={{
               backgroundColor: "#fef957",
+              height: "100%",
             }}
           >
             <NotificationOutlined />
