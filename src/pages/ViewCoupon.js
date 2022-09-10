@@ -52,7 +52,7 @@ export default function ViewCoupon() {
             imgUrl: coupon.imgUrl,
           })
           .then((res) => {
-            console.log("noti succ compl", res);
+            console.log("noti succ compl");
           })
           .catch((err) => console.log("noti error compl", err));
       } else {

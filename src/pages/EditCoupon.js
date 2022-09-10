@@ -73,9 +73,6 @@ export default function AddCoupon() {
   };
 
   const onFinish = async (values) => {
-    setDisableSubmit(true);
-    setSubmitMsg("잠시만 기다려주세요");
-
     const { title, expDate, upload } = values;
 
     if (imgChanged) {
@@ -83,6 +80,8 @@ export default function AddCoupon() {
       if (!checkVal(upload[0].originFileObj)) {
         return false;
       } else {
+        setDisableSubmit(true);
+        setSubmitMsg("잠시만 기다려주세요");
         const imageRef = ref(storage, prevCoupon.imagePath);
         uploadBytes(imageRef, upload[0].originFileObj)
           .then(() => {

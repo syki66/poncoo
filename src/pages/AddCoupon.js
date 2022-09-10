@@ -44,15 +44,14 @@ export default function AddCoupon() {
   const [submitMsg, setSubmitMsg] = useState("저장");
 
   const onFinish = async (values) => {
-    setDisableSubmit(true);
-    setSubmitMsg("잠시만 기다려주세요");
-
     const { title, expDate, upload } = values;
     const uuid = v4();
 
     if (!checkVal(upload[0].originFileObj)) {
       return false;
     } else {
+      setDisableSubmit(true);
+      setSubmitMsg("잠시만 기다려주세요");
       const imageRef = ref(storage, `images/${uuid}`);
       uploadBytes(imageRef, upload[0].originFileObj)
         .then(() => {

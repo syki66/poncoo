@@ -68,8 +68,7 @@ export default function Notification() {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
       if (scrollTop + clientHeight === scrollHeight) {
-        console.log("reached bottom");
-
+        // console.log("reached bottom");
         setTimeout(() => {
           setPost(data.slice(0, post.length + postPerPage));
           if (post.length + postPerPage >= data.length) {
@@ -105,7 +104,7 @@ export default function Notification() {
               block
               type="primary"
               onClick={() => {
-                navigate(-1);
+                navigate(localStorage.getItem("lastPath"));
               }}
             >
               뒤로 가기
@@ -130,7 +129,7 @@ export default function Notification() {
               <List.Item.Meta
                 title={
                   <>
-                    <div>{item.type}</div>
+                    <div style={{ fontWeight: "1000" }}>{item.type}</div>
                     <div>{item.title}</div>
                   </>
                 }
