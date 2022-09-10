@@ -42,7 +42,9 @@ const calculateDates = (prevTS) => {
 export default function Notification() {
   const [data, setData] = useState([]);
   const [post, setPost] = useState([]);
+  const [eachData, setEachData] = useState({});
   const [isEnd, setIsEnd] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const listInnerRef = useRef();
   const navigate = useNavigate();
 
@@ -115,7 +117,12 @@ export default function Notification() {
           itemLayout="horizontal"
           dataSource={post}
           renderItem={(item) => (
-            <List.Item>
+            <List.Item
+              onClick={() => {
+                setOpenModal(true);
+                setEachData(item);
+              }}
+            >
               <img
                 src={item.imgUrl}
                 style={{
@@ -151,6 +158,76 @@ export default function Notification() {
           </Title>
         )}
       </div>
+      {openModal && (
+        <>
+          <div
+            onClick={() => {
+              setOpenModal(false);
+            }}
+            style={{
+              backgroundColor: "rgba(0,0,0,0.5)",
+              position: "absolute",
+              height: "100%",
+              width: "100%",
+              top: "0%",
+              left: "0%",
+            }}
+          ></div>
+          <div
+            style={{
+              backgroundColor: "rgba(255,255,255)",
+              position: "absolute",
+              height: "90%",
+              width: "85%",
+              top: "5%",
+              left: "7.5%",
+              padding: "0.5em",
+              overflow: "auto",
+              borderRadius: "0.5em",
+            }}
+          >
+            <div>
+              <Title align="center" level={2}>
+                {eachData.type}
+              </Title>
+              <Title align="left" level={4}>
+                {eachData.title}
+              </Title>
+              <Title
+                level={5}
+                align="right"
+                style={{
+                  color: "lightGray",
+                  marginBottom: "0em",
+                }}
+              >
+                {eachData.userEmail}
+              </Title>
+              <Title
+                level={5}
+                align="right"
+                style={{
+                  color: "lightGray",
+                  marginTop: "0em",
+                }}
+              >
+                {`수정 날짜: ${eachData.date}`}
+              </Title>
+              <img src={eachData.imgUrl} style={{ width: "100%" }} />
+            </div>
+            <Button
+              onClick={() => {
+                setOpenModal(false);
+              }}
+              type="primary"
+              block
+              style={{ margin: "1em 0em" }}
+            >
+              닫기
+            </Button>
+          </div>
+        </>
+      )}
     </>
   );
 }
