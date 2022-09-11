@@ -42,6 +42,8 @@ export default function AddCoupon() {
 
   const [disableSubmit, setDisableSubmit] = useState(false);
   const [submitMsg, setSubmitMsg] = useState("저장");
+  const [previewImage, setPreviewImage] = useState("");
+  const [openModal, setOpenModal] = useState(false);
 
   const onFinish = async (values) => {
     const { title, expDate, upload } = values;
@@ -112,13 +114,20 @@ export default function AddCoupon() {
     console.log("Failed:", errorInfo);
   };
 
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
+
   const normFile = (e) => {
     console.log("Upload event:", e);
-
+    getBase64(e.file.originFileObj, (url) => {
+      setPreviewImage(url);
+    });
     if (Array.isArray(e)) {
       return e;
     }
-
     return e?.fileList;
   };
 
@@ -158,7 +167,19 @@ export default function AddCoupon() {
             </div>
           </Upload>
         </Form.Item>
-
+        <Button
+          style={{
+            backgroundColor: "#fef957",
+            color: "black",
+            borderColor: "black",
+            width: "50%",
+            marginBottom: "2em",
+          }}
+          onClick={() => setOpenModal(true)}
+          type="ghost"
+        >
+          쿠폰 이미지 미리보기
+        </Button>
         <Form.Item
           label="제목"
           name="title"
@@ -209,6 +230,51 @@ export default function AddCoupon() {
           </Button>
         </Form.Item>
       </Form>
+
+      {openModal && (
+        <>
+          <div
+            onClick={() => {
+              setOpenModal(false);
+            }}
+            style={{
+              backgroundColor: "rgba(0,0,0,0.5)",
+              position: "absolute",
+              height: "100%",
+              width: "100%",
+              top: "0%",
+              left: "0%",
+            }}
+          ></div>
+          <div
+            style={{
+              backgroundColor: "rgba(255,255,255)",
+              position: "absolute",
+              height: "90%",
+              width: "85%",
+              top: "5%",
+              left: "7.5%",
+              padding: "0.5em",
+              overflow: "auto",
+              borderRadius: "0.5em",
+            }}
+          >
+            <div>
+              <img src={previewImage} style={{ width: "100%" }} />
+            </div>
+            <Button
+              onClick={() => {
+                setOpenModal(false);
+              }}
+              type="primary"
+              block
+              style={{ margin: "1em 0em" }}
+            >
+              닫기
+            </Button>
+          </div>
+        </>
+      )}
     </>
   );
 }
