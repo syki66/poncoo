@@ -5,10 +5,18 @@ import notificationService from "../services/notification.service";
 import { Button, Col, List, Row, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import { LoadingOutlined, SmileOutlined } from "@ant-design/icons";
+import moment from "moment";
 
 const { Title } = Typography;
 
 const postPerPage = 20;
+
+const timestampToDate = (ts) => {
+  let date = moment(ts * 1000).format("YYYY년 MM월 DD일, A h시 mm분");
+  date = date.replace("PM", "오후");
+  date = date.replace("AM", "오전");
+  return date;
+};
 
 const calculateDates = (prevTS) => {
   const currTS = Math.floor(Date.now() / 1000);
@@ -211,7 +219,7 @@ export default function Notification() {
                   marginTop: "0em",
                 }}
               >
-                {`수정 날짜: ${eachData.date}`}
+                {`수정 날짜: ${timestampToDate(eachData.date)}`}
               </Title>
               <img src={eachData.imgUrl} style={{ width: "100%" }} />
             </div>
