@@ -244,6 +244,7 @@ export default function AddCoupon() {
               width: "100%",
               top: "0%",
               left: "0%",
+              zIndex: "10",
             }}
           ></div>
           <div
@@ -257,6 +258,7 @@ export default function AddCoupon() {
               padding: "0.5em",
               overflow: "auto",
               borderRadius: "0.5em",
+              zIndex: "11",
             }}
           >
             <div>
