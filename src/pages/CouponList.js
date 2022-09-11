@@ -135,7 +135,7 @@ export default function CouponList({
         >
           <Button
             block
-            onClick={(event) => navigate(0)}
+            onClick={(event) => window.location.reload()}
             style={{
               backgroundColor: "pink",
               height: "100%",
