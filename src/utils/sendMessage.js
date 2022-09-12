@@ -14,6 +14,7 @@ const sendMessage = async (title, desc, image, token) => {
       body: desc,
       icon: "./favicon.ico",
       image: image,
+      click_action: "https://poncoo-277a0.web.app/notification",
     },
     registration_ids: token,
   };

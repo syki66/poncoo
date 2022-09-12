@@ -6,6 +6,9 @@ import { Button, Col, List, Row, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import { LoadingOutlined, SmileOutlined } from "@ant-design/icons";
 import moment from "moment";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
 
 const { Title } = Typography;
 

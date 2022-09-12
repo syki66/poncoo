@@ -7,6 +7,9 @@ import { Typography } from "antd";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import { sendMessage } from "../utils/sendMessage";
 import notificationService from "../services/notification.service";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
 
 const { Title } = Typography;
 

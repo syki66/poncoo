@@ -19,6 +19,10 @@ import { useNavigate } from "react-router-dom";
 import { sendMessage } from "../utils/sendMessage";
 import notificationService from "../services/notification.service";
 
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
+
 const { Title } = Typography;
 
 const checkVal = (file) => {

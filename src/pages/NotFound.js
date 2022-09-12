@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+
+const auth = getAuth();
 
 export default function NotFound() {
   const navigate = useNavigate();
