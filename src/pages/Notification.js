@@ -80,7 +80,7 @@ export default function Notification() {
   const onScroll = () => {
     if (listInnerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-      if (scrollTop + clientHeight === scrollHeight) {
+      if (scrollTop + clientHeight >= scrollHeight - 10) {
         // console.log("reached bottom");
         setTimeout(() => {
           setPost(data.slice(0, post.length + postPerPage));
