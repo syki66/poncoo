@@ -8,6 +8,5 @@
 
 - localStorage -> redux 대체하기
 
-- 달력 등 한글화
-
 - 서비스워커 이용해서 유효기간 만료 알림 가능한지 (periodic sync)
+- pwa 락스크린?

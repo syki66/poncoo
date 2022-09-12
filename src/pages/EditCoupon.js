@@ -7,9 +7,13 @@ import {
   message,
   Upload,
   Typography,
+  ConfigProvider,
 } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import moment from "moment";
+import "moment/locale/ko";
+import locale from "antd/lib/locale/ko_KR";
+
 import CouponDataService from "../services/coupon.services";
 import { storage } from "../firebase-config";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -283,18 +287,20 @@ export default function AddCoupon() {
           <Input />
         </Form.Item>
 
-        <Form.Item
-          label="유효기간"
-          name="expDate"
-          rules={[
-            {
-              required: true,
-              message: "유효기간은 반드시 입력해야 합니다.",
-            },
-          ]}
-        >
-          <DatePicker inputReadOnly placeholder="유효기간 선택" />
-        </Form.Item>
+        <ConfigProvider locale={locale}>
+          <Form.Item
+            label="유효기간"
+            name="expDate"
+            rules={[
+              {
+                required: true,
+                message: "유효기간은 반드시 입력해야 합니다.",
+              },
+            ]}
+          >
+            <DatePicker inputReadOnly placeholder="유효기간 선택" />
+          </Form.Item>
+        </ConfigProvider>
 
         <Form.Item>
           <Button
