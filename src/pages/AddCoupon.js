@@ -7,9 +7,13 @@ import {
   message,
   Upload,
   Typography,
+  ConfigProvider,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
+import "moment/locale/ko";
+import locale from "antd/lib/locale/ko_KR";
+
 import CouponDataService from "../services/coupon.services";
 import { v4 } from "uuid";
 
@@ -207,7 +211,9 @@ export default function AddCoupon() {
             },
           ]}
         >
-          <DatePicker inputReadOnly placeholder="유효기간 선택" />
+          <ConfigProvider locale={locale}>
+            <DatePicker inputReadOnly placeholder="유효기간 선택" />
+          </ConfigProvider>
         </Form.Item>
 
         <Form.Item>
