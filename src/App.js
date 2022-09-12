@@ -12,11 +12,13 @@ import Login from "./pages/Login";
 import Notification from "./pages/Notification";
 import UsedCoupons from "./pages/UsedCoupons";
 import UnusedCoupons from "./pages/UnusedCoupons";
+import ToastMessage from "./components/ToastMessage";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ToastMessage />
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route path="/unused/:id" element={<UnusedCoupons />}></Route>

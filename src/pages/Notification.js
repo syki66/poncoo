@@ -138,7 +138,8 @@ export default function Notification() {
                   aspectRatio: "1 / 1",
                   objectFit: "cover",
                   objectPosition: "50% 10%",
-                  borderBottom: "solid",
+                  border: "solid 0.1em",
+                  marginRight: "0.5em",
                 }}
               />
               <List.Item.Meta

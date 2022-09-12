@@ -75,8 +75,8 @@ export default function AddCoupon() {
                   alert("저장되었습니다.");
                   navigate("/unused/1");
                   sendMessage(
-                    `쿠폰 추가 : ${title}`,
-                    `수정인 : ${localStorage.getItem("userEmail")}`,
+                    `[추가] ${title}`,
+                    `${localStorage.getItem("userEmail")}`,
                     url,
                     JSON.parse(localStorage.getItem("tokens"))
                   );

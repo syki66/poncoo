@@ -38,8 +38,8 @@ export default function ViewCoupon() {
         localStorage.setItem("lastPath", "/used/1");
         alert('"사용 완료" 처리되었습니다.');
         sendMessage(
-          `쿠폰 사용 : ${coupon.title}`,
-          `수정인 : ${localStorage.getItem("userEmail")}`,
+          `[사용] ${coupon.title}`,
+          `${localStorage.getItem("userEmail")}`,
           coupon.imgUrl,
           JSON.parse(localStorage.getItem("tokens"))
         );
@@ -59,8 +59,8 @@ export default function ViewCoupon() {
         localStorage.setItem("lastPath", "/unused/1");
         alert('"사용 복구" 처리 되었습니다.');
         sendMessage(
-          `쿠폰 복구 : ${coupon.title}`,
-          `수정인 : ${localStorage.getItem("userEmail")}`,
+          `[복구] ${coupon.title}`,
+          `${localStorage.getItem("userEmail")}`,
           coupon.imgUrl,
           JSON.parse(localStorage.getItem("tokens"))
         );
@@ -106,8 +106,8 @@ export default function ViewCoupon() {
       alert("삭제되었습니다.");
       navigate(`/used/1`);
       sendMessage(
-        `쿠폰 삭제 : ${coupon.title}`,
-        `수정인 : ${localStorage.getItem("userEmail")}`,
+        `[삭제] ${coupon.title}`,
+        `${localStorage.getItem("userEmail")}`,
         coupon.imgUrl,
         JSON.parse(localStorage.getItem("tokens"))
       );

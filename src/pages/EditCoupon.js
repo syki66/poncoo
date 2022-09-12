@@ -106,8 +106,8 @@ export default function AddCoupon() {
                     alert("수정되었습니다. (사진 교체)");
                     navigate(`/view/${id}`);
                     sendMessage(
-                      `쿠폰 수정 (사진 교체) : ${title}`,
-                      `수정인 : ${localStorage.getItem("userEmail")}`,
+                      `[수정] ${title}`,
+                      `${localStorage.getItem("userEmail")}`,
                       url,
                       JSON.parse(localStorage.getItem("tokens"))
                     );
@@ -154,8 +154,8 @@ export default function AddCoupon() {
           alert("수정되었습니다. (사진 유지)");
           navigate(`/view/${id}`);
           sendMessage(
-            `쿠폰 수정 (사진 유지) : ${title}`,
-            `수정인 : ${localStorage.getItem("userEmail")}`,
+            `[수정] ${title}`,
+            `${localStorage.getItem("userEmail")}`,
             prevCoupon.imgUrl,
             JSON.parse(localStorage.getItem("tokens"))
           );
