@@ -201,20 +201,20 @@ export default function AddCoupon() {
           <Input />
         </Form.Item>
 
-        <Form.Item
-          label="유효기간"
-          name="expDate"
-          rules={[
-            {
-              required: true,
-              message: "유효기간은 반드시 입력해야 합니다.",
-            },
-          ]}
-        >
-          <ConfigProvider locale={locale}>
+        <ConfigProvider locale={locale}>
+          <Form.Item
+            label="유효기간"
+            name="expDate"
+            rules={[
+              {
+                required: true,
+                message: "유효기간은 반드시 입력해야 합니다.",
+              },
+            ]}
+          >
             <DatePicker inputReadOnly placeholder="유효기간 선택" />
-          </ConfigProvider>
-        </Form.Item>
+          </Form.Item>
+        </ConfigProvider>
 
         <Form.Item>
           <Button
