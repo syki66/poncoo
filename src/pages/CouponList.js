@@ -168,7 +168,7 @@ export default function CouponList({
             <Col key={doc.id} span={12} style={{ padding: "0.5em" }}>
               <div
                 style={{
-                  border: "solid",
+                  border: "0.2em solid black",
                 }}
               >
                 {tabID === "unused" ? (
@@ -195,7 +195,7 @@ export default function CouponList({
                             aspectRatio: "1 / 1",
                             objectFit: "cover",
                             objectPosition: "50% 10%",
-                            borderBottom: "solid",
+                            borderBottom: "0.2em solid black",
                           }}
                           src={doc.imgUrl}
                         />
