@@ -14,7 +14,8 @@
 |쿠폰 수정|쿠폰 사용기록|쿠폰 사용기록 무한스크롤|쿠폰 사용기록 조회|
 |![쿠폰 수정](https://github.com/syki66/poncoo/assets/59393359/e1f1a74a-bae6-4852-b344-c6e2e01b4a52)|![쿠폰 사용기록](https://github.com/syki66/poncoo/assets/59393359/0d98b621-c751-446e-9747-f80ef5898752)|![쿠폰 사용기록 무한스크롤](https://github.com/syki66/poncoo/assets/59393359/33757b8e-41d7-4b0b-8b22-04f955e1a7ba)|![쿠폰 사용조회 모달](https://github.com/syki66/poncoo/assets/59393359/db731a3d-32f3-4ed9-8f7c-57da443335e2)|
 |쿠폰 사용알림 (foreground)|쿠폰 사용알림 (background)|||
-|![쿠폰 사용 알림 (foreground)](https://github.com/syki66/poncoo/assets/59393359/98e1a69e-585b-4b41-8853-852b1b1924e6)|![쿠폰 사용알림(background)](https://github.com/syki66/poncoo/assets/59393359/f564f654-5fac-4ba0-bcfb-915ce9399a2c)|||
+|![쿠폰 사용 알림 (foreground)](https://github.com/syki66/poncoo/assets/59393359/98e1a69e-585b-4b41-8853-852b1b1924e6)|![쿠폰 사용알림(background)](https://github.com/syki66/poncoo/assets/59393359/f564f654-5fac-4ba0-bcfb-915ce9399a2c)|![dummy](https://github.com/syki66/poncoo/assets/59393359/1bc76817-a211-4607-aa53-fe7de400d4c4)|![dummy](https://github.com/syki66/poncoo/assets/59393359/1bc76817-a211-4607-aa53-fe7de400d4c4)|
+
 
 # 기능
 
