@@ -44,22 +44,22 @@ export default function CouponList({
       sorted.sort(function (a, b) {
         return b.currDate - a.currDate;
       });
-      localStorage.setItem('sortOption', 'curr_descending');
+      sessionStorage.setItem('sortOption', 'curr_descending');
     } else if (value === 'curr_ascending') {
       sorted.sort(function (a, b) {
         return a.currDate - b.currDate;
       });
-      localStorage.setItem('sortOption', 'curr_ascending');
+      sessionStorage.setItem('sortOption', 'curr_ascending');
     } else if (value === 'exp_ascending') {
       sorted.sort(function (a, b) {
         return a.expDate - b.expDate;
       });
-      localStorage.setItem('sortOption', 'exp_ascending');
+      sessionStorage.setItem('sortOption', 'exp_ascending');
     } else if (value === 'exp_descending') {
       sorted.sort(function (a, b) {
         return b.expDate - a.expDate;
       });
-      localStorage.setItem('sortOption', 'exp_descending');
+      sessionStorage.setItem('sortOption', 'exp_descending');
     } else {
       console.log('정렬과정 중 에러 발생');
     }
@@ -111,7 +111,7 @@ export default function CouponList({
               width: '100%',
             }}
             defaultValue={
-              localStorage.getItem('sortOption') || 'curr_descending'
+              sessionStorage.getItem('sortOption') || 'curr_descending'
             }
             onChange={handleSelectChange}
           >

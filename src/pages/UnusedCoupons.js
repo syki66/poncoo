@@ -15,19 +15,19 @@ export default function UnusedCoupons() {
   const [couponsLen, setCouponsLen] = useState({});
 
   const sortCoupons = (sortedParsedData) => {
-    if (localStorage.getItem('sortOption') === 'curr_descending') {
+    if (sessionStorage.getItem('sortOption') === 'curr_descending') {
       sortedParsedData.sort(function (a, b) {
         return b.currDate - a.currDate;
       });
-    } else if (localStorage.getItem('sortOption') === 'curr_ascending') {
+    } else if (sessionStorage.getItem('sortOption') === 'curr_ascending') {
       sortedParsedData.sort(function (a, b) {
         return a.currDate - b.currDate;
       });
-    } else if (localStorage.getItem('sortOption') === 'exp_ascending') {
+    } else if (sessionStorage.getItem('sortOption') === 'exp_ascending') {
       sortedParsedData.sort(function (a, b) {
         return a.expDate - b.expDate;
       });
-    } else if (localStorage.getItem('sortOption') === 'exp_descending') {
+    } else if (sessionStorage.getItem('sortOption') === 'exp_descending') {
       sortedParsedData.sort(function (a, b) {
         return b.expDate - a.expDate;
       });
