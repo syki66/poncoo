@@ -110,7 +110,9 @@ export default function CouponList({
             style={{
               width: '100%',
             }}
-            defaultValue={localStorage.getItem('sortOption')}
+            defaultValue={
+              localStorage.getItem('sortOption') || 'curr_descending'
+            }
             onChange={handleSelectChange}
           >
             <Option value="curr_descending">최근 순</Option>
