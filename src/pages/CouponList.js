@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import {
   Button,
   Card,
@@ -8,12 +8,12 @@ import {
   Pagination,
   Typography,
   Tabs,
-} from "antd";
-import { NotificationOutlined, SyncOutlined } from "@ant-design/icons";
-import { useLocation, useNavigate } from "react-router-dom";
-import moment from "moment";
-import { getAuth, signOut } from "firebase/auth";
-import { initToken } from "../utils/initToken";
+} from 'antd';
+import { NotificationOutlined, SyncOutlined } from '@ant-design/icons';
+import { useLocation, useNavigate } from 'react-router-dom';
+import moment from 'moment';
+import { getAuth, signOut } from 'firebase/auth';
+import { initToken } from '../utils/initToken';
 
 const { Title } = Typography;
 const { Meta } = Card;
@@ -36,28 +36,32 @@ export default function CouponList({
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
-  localStorage.setItem("lastPath", path);
+  localStorage.setItem('lastPath', path);
 
   const handleSelectChange = (value) => {
     const sorted = [...coupons].sort();
-    if (value === "curr_descending") {
+    if (value === 'curr_descending') {
       sorted.sort(function (a, b) {
         return b.currDate - a.currDate;
       });
-    } else if (value === "curr_ascending") {
+      localStorage.setItem('sortOption', 'curr_descending');
+    } else if (value === 'curr_ascending') {
       sorted.sort(function (a, b) {
         return a.currDate - b.currDate;
       });
-    } else if (value === "exp_ascending") {
+      localStorage.setItem('sortOption', 'curr_ascending');
+    } else if (value === 'exp_ascending') {
       sorted.sort(function (a, b) {
         return a.expDate - b.expDate;
       });
-    } else if (value === "exp_descending") {
+      localStorage.setItem('sortOption', 'exp_ascending');
+    } else if (value === 'exp_descending') {
       sorted.sort(function (a, b) {
         return b.expDate - a.expDate;
       });
+      localStorage.setItem('sortOption', 'exp_descending');
     } else {
-      console.log("정렬과정 중 에러 발생");
+      console.log('정렬과정 중 에러 발생');
     }
     setCoupons(sorted);
     setPosts(
@@ -80,32 +84,33 @@ export default function CouponList({
   };
 
   const onTabChange = (key) => {
-    if (key === "unused") {
-      navigate("/unused/1");
-    } else if (key === "used") {
-      navigate("/used/1");
+    if (key === 'unused') {
+      navigate('/unused/1');
+    } else if (key === 'used') {
+      navigate('/used/1');
     }
   };
 
   const logout = async () => {
     await signOut(auth);
     localStorage.clear();
-    navigate("/");
+    navigate('/');
   };
 
   useEffect(() => {
     getCoupons();
     initToken();
   }, []);
+
   return (
     <>
-      <Row style={{ padding: "0.5em" }}>
-        <Col span={12} style={{ padding: "0.5em" }}>
+      <Row style={{ padding: '0.5em' }}>
+        <Col span={12} style={{ padding: '0.5em' }}>
           <Select
             style={{
-              width: "100%",
+              width: '100%',
             }}
-            defaultValue="curr_descending"
+            defaultValue={localStorage.getItem('sortOption')}
             onChange={handleSelectChange}
           >
             <Option value="curr_descending">최근 순</Option>
@@ -114,13 +119,13 @@ export default function CouponList({
             <Option value="exp_descending">유효기간 만료 역순</Option>
           </Select>
         </Col>
-        <Col span={12} style={{ padding: "0.5em" }}>
-          <Button onClick={() => navigate("/upload")} block type="primary">
+        <Col span={12} style={{ padding: '0.5em' }}>
+          <Button onClick={() => navigate('/upload')} block type="primary">
             새 쿠폰 추가
           </Button>
         </Col>
       </Row>
-      <Row style={{ padding: "0.5em" }}>
+      <Row style={{ padding: '0.5em' }}>
         <Col span={12}>
           <Tabs defaultActiveKey={tabID} onChange={onTabChange}>
             <TabPane tab="사용가능" key="unused"></TabPane>
@@ -130,15 +135,15 @@ export default function CouponList({
         <Col
           span={6}
           style={{
-            padding: "0.5em",
+            padding: '0.5em',
           }}
         >
           <Button
             block
             onClick={(event) => window.location.reload()}
             style={{
-              backgroundColor: "pink",
-              height: "100%",
+              backgroundColor: 'pink',
+              height: '100%',
             }}
           >
             <SyncOutlined />
@@ -147,15 +152,15 @@ export default function CouponList({
         <Col
           span={6}
           style={{
-            padding: "0.5em",
+            padding: '0.5em',
           }}
         >
           <Button
             block
             onClick={(event) => navigate(`/notification`)}
             style={{
-              backgroundColor: "#fef957",
-              height: "100%",
+              backgroundColor: '#fef957',
+              height: '100%',
             }}
           >
             <NotificationOutlined />
@@ -165,37 +170,37 @@ export default function CouponList({
       <Row>
         {posts.map((doc) => {
           return (
-            <Col key={doc.id} span={12} style={{ padding: "0.5em" }}>
+            <Col key={doc.id} span={12} style={{ padding: '0.5em' }}>
               <div
                 style={{
-                  border: "0.2em solid black",
+                  border: '0.2em solid black',
                 }}
               >
-                {tabID === "unused" ? (
+                {tabID === 'unused' ? (
                   <Card
                     size="small"
                     onClick={(event) => navigate(`/view/${doc.id}`)}
                     cover={
-                      <div style={{ position: "relative" }}>
+                      <div style={{ position: 'relative' }}>
                         <div
                           style={{
-                            position: "absolute",
-                            bottom: "0.3em",
-                            right: "0.3em",
-                            zIndex: "100",
+                            position: 'absolute',
+                            bottom: '0.3em',
+                            right: '0.3em',
+                            zIndex: '100',
                             textShadow: `-0.1em 0 #fef957, 0 0.1em #fef957, 0.1em 0 #fef957, 0 -0.1em #fef957`,
                           }}
                         >
-                          {doc.userEmail.split("@")[0]}
+                          {doc.userEmail.split('@')[0]}
                         </div>
                         <img
                           alt="coupon"
                           style={{
-                            width: "100%",
-                            aspectRatio: "1 / 1",
-                            objectFit: "cover",
-                            objectPosition: "50% 10%",
-                            borderBottom: "0.2em solid black",
+                            width: '100%',
+                            aspectRatio: '1 / 1',
+                            objectFit: 'cover',
+                            objectPosition: '50% 10%',
+                            borderBottom: '0.2em solid black',
                           }}
                           src={doc.imgUrl}
                         />
@@ -206,7 +211,7 @@ export default function CouponList({
                       title={doc.title}
                       description={`~ ${moment
                         .unix(doc.expDate)
-                        .format("YYYY년 MM월 DD일")}`}
+                        .format('YYYY년 MM월 DD일')}`}
                     />
                   </Card>
                 ) : (
@@ -215,30 +220,30 @@ export default function CouponList({
                     onClick={(event) => navigate(`/view/${doc.id}`)}
                     cover={
                       <>
-                        <div style={{ position: "relative" }}>
+                        <div style={{ position: 'relative' }}>
                           <div
                             style={{
-                              position: "absolute",
-                              width: "100%",
-                              aspectRatio: "1 / 1",
-                              zIndex: "100",
+                              position: 'absolute',
+                              width: '100%',
+                              aspectRatio: '1 / 1',
+                              zIndex: '100',
                             }}
                           >
                             <div
                               style={{
-                                height: "90%",
-                                width: "90%",
-                                marginLeft: "5%",
-                                marginTop: "5%",
-                                border: "2vw solid red",
-                                borderRadius: "100%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "red",
-                                fontWeight: "1000",
-                                fontSize: "10vw",
-                                transform: "rotate(-22.5deg)",
+                                height: '90%',
+                                width: '90%',
+                                marginLeft: '5%',
+                                marginTop: '5%',
+                                border: '2vw solid red',
+                                borderRadius: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: 'red',
+                                fontWeight: '1000',
+                                fontSize: '10vw',
+                                transform: 'rotate(-22.5deg)',
                               }}
                             >
                               사용
@@ -247,25 +252,25 @@ export default function CouponList({
                             </div>
                             <div
                               style={{
-                                position: "absolute",
-                                bottom: "0.3em",
-                                right: "0.3em",
-                                zIndex: "100",
+                                position: 'absolute',
+                                bottom: '0.3em',
+                                right: '0.3em',
+                                zIndex: '100',
                                 textShadow: `-0.1em 0 #fef957, 0 0.1em #fef957, 0.1em 0 #fef957, 0 -0.1em #fef957`,
                               }}
                             >
-                              {doc.userEmail.split("@")[0]}
+                              {doc.userEmail.split('@')[0]}
                             </div>
                           </div>
                           <img
                             alt="coupon"
                             style={{
-                              width: "100%",
-                              aspectRatio: "1 / 1",
-                              objectFit: "cover",
-                              objectPosition: "50% 10%",
-                              borderBottom: "solid",
-                              opacity: "0.5",
+                              width: '100%',
+                              aspectRatio: '1 / 1',
+                              objectFit: 'cover',
+                              objectPosition: '50% 10%',
+                              borderBottom: 'solid',
+                              opacity: '0.5',
                             }}
                             src={doc.imgUrl}
                           />
@@ -277,7 +282,7 @@ export default function CouponList({
                       title={doc.title}
                       description={`~ ${moment
                         .unix(doc.expDate)
-                        .format("YYYY년 MM월 DD일")}`}
+                        .format('YYYY년 MM월 DD일')}`}
                     />
                   </Card>
                 )}
@@ -288,7 +293,7 @@ export default function CouponList({
       </Row>
       <Row
         style={{
-          paddingTop: "1em",
+          paddingTop: '1em',
         }}
         justify="center"
       >
@@ -307,7 +312,7 @@ export default function CouponList({
 
       <Title
         style={{
-          padding: "1em",
+          padding: '1em',
         }}
         level={5}
         align="center"
@@ -317,11 +322,11 @@ export default function CouponList({
         사용 완료 : {couponsLen.usedLen} 장
       </Title>
       <Title level={5} align="center">
-        사용자 : {localStorage.getItem("userEmail")}
+        사용자 : {localStorage.getItem('userEmail')}
       </Title>
       <Row
         style={{
-          padding: "1em",
+          padding: '1em',
         }}
       >
         <Button onClick={() => logout()} block type="primary">

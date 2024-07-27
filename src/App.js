@@ -1,18 +1,17 @@
-import "./App.css";
-import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
+import './App.css';
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import CouponList from "./pages/CouponList";
-import AddCoupon from "./pages/AddCoupon";
-import NotFound from "./pages/NotFound";
-import ViewCoupon from "./pages/ViewCoupon";
-import EditCoupon from "./pages/EditCoupon";
-import Login from "./pages/Login";
-// import BottomNav from "./components/BottomNav";
-import Notification from "./pages/Notification";
-import UsedCoupons from "./pages/UsedCoupons";
-import UnusedCoupons from "./pages/UnusedCoupons";
-import ToastMessage from "./components/ToastMessage";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import CouponList from './pages/CouponList';
+import AddCoupon from './pages/AddCoupon';
+import NotFound from './pages/NotFound';
+import ViewCoupon from './pages/ViewCoupon';
+import EditCoupon from './pages/EditCoupon';
+import Login from './pages/Login';
+import Notification from './pages/Notification';
+import UsedCoupons from './pages/UsedCoupons';
+import UnusedCoupons from './pages/UnusedCoupons';
+import ToastMessage from './components/ToastMessage';
 
 function App() {
   return (
@@ -29,7 +28,6 @@ function App() {
           <Route path="/notification" element={<Notification />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
-        {/* <BottomNav /> */}
       </BrowserRouter>
     </>
   );
